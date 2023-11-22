@@ -5,8 +5,18 @@ import { UserContextProvider } from "../pages/pre-built/user-manage/UserContext"
 import { RedirectAs404 } from "../utils/Utils";
 
 import Homepage from "../pages/Homepage";
-import Sales from "../pages/Sales";
-import Analytics from "../pages/Analytics";
+import UserManagment from "../pages/UserManagment";
+import MatchingManagment from "../pages/MatchingManagment";
+import JobManagment from "../pages/JobManagment";
+import BannerManagment from "../pages/BannerManagment";
+import OrderManagment from "../pages/OrderManagment";
+import DailyLifeManagment from "../pages/DailyLifeManagment";
+import AdsManagment from "../pages/AdsManagment";
+import CouponManagment from "../pages/CouponManagment";
+import ChatManagment from "../pages/ChatManagment";
+import ReviewManagment from "../pages/ReviewManagment";
+import ServiceManagment from "../pages/ServiceManagment";
+import AdminSettings from "../pages/AdminSettings";
 
 import Component from "../pages/components/Index";
 import Accordian from "../pages/components/Accordions";
@@ -112,10 +122,20 @@ const Pages = () => {
   return (
     <Suspense fallback={<div />}>
       <Switch>
-
         {/*Dashboards*/}
-        <Route exact path={`${process.env.PUBLIC_URL}/sales`} component={Sales}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/analytics`} component={Analytics}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/user-managment`} component={UserManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/matching-managment`} component={MatchingManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/job-managment`} component={JobManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/banner-managment`} component={BannerManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/order-managment`} component={OrderManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/daily-life-managment`} component={DailyLifeManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/ads-managment`} component={AdsManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/coupon-managment`} component={CouponManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/chat-managment`} component={ChatManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/review-managment`} component={ReviewManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/service-managment`} component={ServiceManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/admin-settings`} component={AdminSettings}></Route>
+
         <Route exact path={`${process.env.PUBLIC_URL}/_blank`} component={Blank}></Route>
 
         {/*Pre-built Pages*/}

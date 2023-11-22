@@ -1,8 +1,7 @@
 import React from "react";
 import { Card } from "reactstrap";
-// import { Icon } from "../../Component";
 
-const DataCard = ({ title, amount, percentChange, up, chart: ChartComponent }) => {
+const DataCard = ({ title, amount,}) => {
   return (
     <Card>
       <div className="nk-ecwg nk-ecwg6">
@@ -15,7 +14,7 @@ const DataCard = ({ title, amount, percentChange, up, chart: ChartComponent }) =
           <div className="data">
             <div className="data-group">
               <div className="amount">{amount}</div>
-              <div className="nk-ecwg6-ck">{ChartComponent}</div>
+
             </div>
             {/* <div className="info">
               <span className={`change ${up ? "up text-success" : "down text-danger"}`}>

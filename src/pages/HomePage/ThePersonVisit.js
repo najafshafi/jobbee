@@ -86,140 +86,141 @@ const ThePersonVisit = () => {
                     </NavLink>
                   </NavItem>
                 </Nav>
+                <div className=" bg-white w-100 p-3">
+                  <TabContent activeTab={activeTab}>
+                    <TabPane tabId="1">
+                      <h5>The Person Visit</h5>
+                      <div>
+                        <table className="table table-bordered TopTable">
+                          <thead>
+                            <tr>
+                              <th scope="row" rowSpan={2}>
+                                Employees
+                              </th>
+                              <td rowSpan={2}>236,234</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row" rowSpan={2}>
+                                Companies
+                              </th>
+                              <td rowSpan={2}>233,2</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h5>Logged in Area</h5>
 
-                <TabContent activeTab={activeTab}>
-                  <TabPane tabId="1">
-                    <h5>The Person Visit</h5>
-                    <div>
-                      <table className="table table-bordered TopTable">
-                        <thead>
+                        <table className="CountryTable">
                           <tr>
-                            <th scope="row" rowSpan={2}>
-                              Employees
+                            <th rowspan="7" className="Heading">
+                              Country
                             </th>
-                            <td rowSpan={2}>236,234</td>
                           </tr>
-                        </thead>
-                        <tbody>
                           <tr>
-                            <th scope="row" rowSpan={2}>
-                              Companies
-                            </th>
-                            <td rowSpan={2}>233,2</td>
+                            <td>Germany</td>
+                            <td>523</td>
                           </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div>
-                      <h5>Logged in Area</h5>
+                          <tr>
+                            <td>Mexico</td>
+                            <td>6253</td>
+                          </tr>
+                          <tr>
+                            <td>Austria</td>
+                            <td>35</td>
+                          </tr>
+                          <tr>
+                            <td>UK</td>
+                            <td>746</td>
+                          </tr>
+                          <tr>
+                            <td>Canada</td>
+                            <td>623</td>
+                          </tr>
+                          <tr>
+                            <td>Italy</td>
+                            <td>7654</td>
+                          </tr>
+                        </table>
 
-                      <table className="CountryTable">
-                        <tr>
-                          <th rowspan="7" className="Heading">
-                            Country
-                          </th>
-                        </tr>
-                        <tr>
-                          <td>Germany</td>
-                          <td>523</td>
-                        </tr>
-                        <tr>
-                          <td>Mexico</td>
-                          <td>6253</td>
-                        </tr>
-                        <tr>
-                          <td>Austria</td>
-                          <td>35</td>
-                        </tr>
-                        <tr>
-                          <td>UK</td>
-                          <td>746</td>
-                        </tr>
-                        <tr>
-                          <td>Canada</td>
-                          <td>623</td>
-                        </tr>
-                        <tr>
-                          <td>Italy</td>
-                          <td>7654</td>
-                        </tr>
-                      </table>
+                        <table className="CountryTable">
+                          <tr>
+                            <th rowspan="7" className="Heading">
+                              Country
+                            </th>
+                          </tr>
+                          <tr>
+                            <td>Germany</td>
+                            <td>523</td>
+                          </tr>
+                          <tr>
+                            <td>Mexico</td>
+                            <td>6253</td>
+                          </tr>
+                          <tr>
+                            <td>Austria</td>
+                            <td>35</td>
+                          </tr>
+                          <tr>
+                            <td>UK</td>
+                            <td>746</td>
+                          </tr>
+                          <tr>
+                            <td>Canada</td>
+                            <td>623</td>
+                          </tr>
+                          <tr>
+                            <td>Italy</td>
+                            <td>7654</td>
+                          </tr>
+                        </table>
 
-                      <table className="CountryTable">
-                        <tr>
-                          <th rowspan="7" className="Heading">
-                            Country
-                          </th>
-                        </tr>
-                        <tr>
-                          <td>Germany</td>
-                          <td>523</td>
-                        </tr>
-                        <tr>
-                          <td>Mexico</td>
-                          <td>6253</td>
-                        </tr>
-                        <tr>
-                          <td>Austria</td>
-                          <td>35</td>
-                        </tr>
-                        <tr>
-                          <td>UK</td>
-                          <td>746</td>
-                        </tr>
-                        <tr>
-                          <td>Canada</td>
-                          <td>623</td>
-                        </tr>
-                        <tr>
-                          <td>Italy</td>
-                          <td>7654</td>
-                        </tr>
-                      </table>
-
-                      <table className="CountryTable">
-                        <tr>
-                          <th rowspan="7" className="Heading">
-                            Country
-                          </th>
-                        </tr>
-                        <tr>
-                          <td>Germany</td>
-                          <td>523</td>
-                        </tr>
-                        <tr>
-                          <td>Mexico</td>
-                          <td>6253</td>
-                        </tr>
-                        <tr>
-                          <td>Austria</td>
-                          <td>35</td>
-                        </tr>
-                        <tr>
-                          <td>UK</td>
-                          <td>746</td>
-                        </tr>
-                        <tr>
-                          <td>Canada</td>
-                          <td>623</td>
-                        </tr>
-                        <tr>
-                          <td>Italy</td>
-                          <td>7654</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </TabPane>
-                  <TabPane tabId="2">
-                    <p> Some text for tab 2 </p>
-                  </TabPane>
-                  <TabPane tabId="3">
-                    <p> Some text for tab 3 </p>
-                  </TabPane>
-                  <TabPane tabId="4">
-                    <p> Some text for tab 4 </p>
-                  </TabPane>
-                </TabContent>
+                        <table className="CountryTable">
+                          <tr>
+                            <th rowspan="7" className="Heading">
+                              Country
+                            </th>
+                          </tr>
+                          <tr>
+                            <td>Germany</td>
+                            <td>523</td>
+                          </tr>
+                          <tr>
+                            <td>Mexico</td>
+                            <td>6253</td>
+                          </tr>
+                          <tr>
+                            <td>Austria</td>
+                            <td>35</td>
+                          </tr>
+                          <tr>
+                            <td>UK</td>
+                            <td>746</td>
+                          </tr>
+                          <tr>
+                            <td>Canada</td>
+                            <td>623</td>
+                          </tr>
+                          <tr>
+                            <td>Italy</td>
+                            <td>7654</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </TabPane>
+                    <TabPane tabId="2">
+                      <p> Some text for tab 2 </p>
+                    </TabPane>
+                    <TabPane tabId="3">
+                      <p> Some text for tab 3 </p>
+                    </TabPane>
+                    <TabPane tabId="4">
+                      <p> Some text for tab 4 </p>
+                    </TabPane>
+                  </TabContent>
+                </div>
               </div>
             </div>
           </div>

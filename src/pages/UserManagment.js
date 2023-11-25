@@ -415,11 +415,13 @@ const UserManagment = () => {
                       <DataTableRow>
                         <span>{index + 1}</span>
                       </DataTableRow>
+                      
                       <DataTableRow size="mb">
                         <Link to={`${process.env.PUBLIC_URL}/user-details/${item._id}`}>
                           {item.name}
                         </Link>
                       </DataTableRow>
+
                       <DataTableRow size="mb">
                         <span>{item.phone}</span>
                       </DataTableRow>

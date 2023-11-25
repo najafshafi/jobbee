@@ -3,14 +3,26 @@ import { DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
 import { Icon } from "../../../../components/Component";
 import { LinkList, LinkItem } from "../../../../components/links/Links";
 import UserAvatar from "../../../../components/user/UserAvatar";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../../../store/actions";
 
-const User = () => {
+
+
+const User = (props) => {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((prevState) => !prevState);
 
+
+  const { user } = props;
+  const { name, email } = user;
+  const dispatch = useDispatch();
+
   const handleSignout = () => {
-    localStorage.removeItem("accessToken");
+    dispatch({ type: LOGOUT });
   };
+
+
+
 
   return (
     <Dropdown isOpen={open} className="user-dropdown" toggle={toggle}>
@@ -26,7 +38,7 @@ const User = () => {
           <UserAvatar icon="user-alt" className="sm" />
           <div className="user-info d-none d-md-block">
             <div className="user-status">Administrator</div>
-            <div className="user-name dropdown-indicator">Abu Bin Ishityak</div>
+            <div className="user-name dropdown-indicator">{name}</div>
           </div>
         </div>
       </DropdownToggle>
@@ -37,8 +49,8 @@ const User = () => {
               <span>AB</span>
             </div>
             <div className="user-info">
-              <span className="lead-text">Abu Bin Ishtiyak</span>
-              <span className="sub-text">info@softnio.com</span>
+              <span className="lead-text">{name}</span>
+              <span className="sub-text">{email}</span>
             </div>
           </div>
         </div>
@@ -50,14 +62,11 @@ const User = () => {
             <LinkItem link="/user-profile-setting" icon="setting-alt" onClick={toggle}>
               Account Setting
             </LinkItem>
-            <LinkItem link="/user-profile-activity" icon="activity-alt" onClick={toggle}>
-              Login Activity
-            </LinkItem>
           </LinkList>
         </div>
         <div className="dropdown-inner">
           <LinkList>
-            <a href={`${process.env.PUBLIC_URL}/auth-login`} onClick={handleSignout}>
+            <a  href={`${process.env.PUBLIC_URL}/`} onClick={handleSignout}>
               <Icon name="signout"></Icon>
               <span>Sign Out</span>
             </a>

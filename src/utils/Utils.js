@@ -1,3 +1,4 @@
+import moment from "moment";
 import { Redirect } from "react-router-dom";
 
 //url for production
@@ -156,3 +157,32 @@ export const bulkActionOptions = [
   { value: "suspend", label: "Suspend User" },
   { value: "delete", label: "Delete User" },
 ];
+
+
+
+
+
+export const editParam = (params) => {
+  delete params._id;
+  return params;
+}
+
+export const imageUrl = (image) => {
+  return 'https://storage.googleapis.com/arpee/public/uploads' + '/original/' + image;
+}
+
+
+export const getTime = (date) => {
+  let result = moment(date).fromNow();
+  const now = moment();
+  const days = now.diff(date, 'days');
+  const weeks = now.diff(date, 'weeks');
+  if (days >= 7) {
+    if (days <= 13) {
+      result = `a week ago`;
+    } else if (days > 13 && days <= 25) {
+      result = `${weeks} weeks ago`;
+    }
+  }
+  return result;
+};

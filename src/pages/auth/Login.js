@@ -17,32 +17,43 @@ import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { login } from "../../services/apis";
+import { useDispatch } from "react-redux";
+import * as actionTypes from "../../store/actions";
+import { initialSesstin } from "../../store/configureStore";
+
+
 
 const Login = () => {
+
   const [loading, setLoading] = useState(false);
   const [passState, setPassState] = useState(false);
   const [errorVal, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
-  const onFormSubmit = (formData) => {
+  const onFormSubmit = () => {
     setLoading(true);
-    const loginName = "info@softnio.com";
-    const pass = "123456";
-    if (formData.name === loginName && formData.passcode === pass) {
-      localStorage.setItem("accessToken", "token");
-      setTimeout(() => {
-        window.history.pushState(
-          `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "/"}`,
-          "auth-login",
-          `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "/"}`
-        );
-        window.location.reload();
-      }, 2000);
-    } else {
-      setTimeout(() => {
-        setError("Cannot login with credentials");
+    login({ email: email, password: password, login_with: 'Auth' }).then((data) => {
+      if (!data.data.status) {
+        initialSesstin(data.data.tokens);
         setLoading(false);
-      }, 2000);
-    }
+        dispatch({
+          type: actionTypes.LOGIN,
+          tokens: data.data.tokens,
+          user: data.data.user,
+          isLogin: true
+        });
+      } else {
+        setLoading(false);
+      }
+
+    }).catch((error) => {
+      console.log(error);
+      setError(error)
+      setLoading(false);
+    })
   };
 
   const { errors, register, handleSubmit } = useForm();
@@ -64,7 +75,7 @@ const Login = () => {
               <BlockContent>
                 <BlockTitle tag="h4">Sign-In</BlockTitle>
                 <BlockDes>
-                  <p>Access JOBSWITCH using your email and passcode.</p>
+                  <p>Access JOBSWITCH using your email and password.</p>
                 </BlockDes>
               </BlockContent>
             </BlockHead>
@@ -80,17 +91,20 @@ const Login = () => {
               <div className="form-group">
                 <div className="form-label-group">
                   <label className="form-label" htmlFor="default-01">
-                    Email or Username
+                    Email
                   </label>
                 </div>
                 <div className="form-control-wrap">
                   <input
                     type="text"
                     id="default-01"
-                    name="name"
+                    name="email"
+                    required
+                    onChange={(evt) => {
+                      setEmail(evt.target.value)
+                    }}
                     ref={register({ required: "This field is required" })}
-                    defaultValue="info@softnio.com"
-                    placeholder="Enter your email address or username"
+                    placeholder="Enter your email address "
                     className="form-control-lg form-control"
                   />
                   {errors.name && <span className="invalid">{errors.name.message}</span>}
@@ -121,8 +135,11 @@ const Login = () => {
                   <input
                     type={passState ? "text" : "password"}
                     id="password"
+                    required
+                    onChange={(evt) => {
+                      setPassword(evt.target.value)
+                    }}
                     name="passcode"
-                    defaultValue="123456"
                     ref={register({ required: "This field is required" })}
                     placeholder="Enter your Password"
                     className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}

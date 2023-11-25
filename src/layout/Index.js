@@ -18,13 +18,25 @@ const Layout = () => {
   });
 
   useEffect(() => {
-    document.body.className = `nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme ${
-      themeState.skin === "dark" ? "dark-mode" : ""
-    }`;
+    document.body.className = `nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme ${themeState.skin === "dark" ? "dark-mode" : ""
+      }`;
+
+    // Cleanup function for the effect
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.height = "auto";
+    };
+
   }, [themeState.skin]);
 
   useEffect(() => {
     viewChange();
+
+    // Cleanup function for the effect
+    return () => {
+      window.removeEventListener("load", viewChange);
+      window.removeEventListener("resize", viewChange);
+    };
   }, []);
 
   // Stops scrolling on overlay
@@ -37,6 +49,12 @@ const Layout = () => {
       document.body.style.overflow = "auto";
       document.body.style.height = "auto";
     }
+
+    // Cleanup function for the effect
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.height = "auto";
+    };
   }, [visibility]);
 
   // function to toggle sidebar

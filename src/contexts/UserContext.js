@@ -1,5 +1,5 @@
 import React, { useState, createContext } from "react";
-import { users } from "../../../services/apis";
+import { users } from "../services/apis";
 
 export const UserContext = createContext();
 export const UserContextProvider = (props) => {

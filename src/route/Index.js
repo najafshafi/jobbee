@@ -1,7 +1,7 @@
 import React, { Suspense, useLayoutEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { ProductContextProvider } from "../pages/pre-built/products/ProductContext";
-import { UserContextProvider } from "../pages/pre-built/user-manage/UserContext";
+import { UserContextProvider } from "../contexts/UserContext";
 import { RedirectAs404 } from "../utils/Utils";
 
 import Homepage from "../pages/HomePage/Homepage";
@@ -130,7 +130,13 @@ const Pages = () => {
 
         <Route exact path={`${process.env.PUBLIC_URL}/the-person-visit`} component={ThePersonVisit}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/logged-in-area`} component={LoggedInArea}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/user-managment`} component={UserManagment}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/user-managment`}
+          render={() => (
+            <UserContextProvider>
+              <UserManagment />
+            </UserContextProvider>
+          )}
+        ></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/matching-managment`} component={MatchingManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/job-managment`} component={JobManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/banner-managment`} component={BannerManagment}></Route>
@@ -145,8 +151,7 @@ const Pages = () => {
 
         <Route exact path={`${process.env.PUBLIC_URL}/_blank`} component={Blank}></Route>
 
-        {/*Pre-built Pages*/}
-        <Route exact path={`${process.env.PUBLIC_URL}/project-card`} component={ProjectCardPage}></Route>
+        {/* <Route exact path={`${process.env.PUBLIC_URL}/project-card`} component={ProjectCardPage}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/project-list`} component={ProjectListPage}></Route>
         <Route //Context Api added
           exact
@@ -206,9 +211,9 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/order-list-sales`} component={OrderSales}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/kyc-list-regular`} component={KycListRegular}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/kyc-details-regular/:id`} component={KycDetailsRegular}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/product-list`} component={ProductList}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/product-list`} component={ProductList}></Route> */}
 
-        <Route // context api added
+        {/* <Route // context api added
           exact
           path={`${process.env.PUBLIC_URL}/product-card`}
           render={(props) => (
@@ -229,16 +234,16 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/invoice-list`} component={InvoiceList}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/invoice-details/:id`} component={InvoiceDetails}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/pricing-table`} component={PricingTable}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/image-gallery`} component={GalleryPreview}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/image-gallery`} component={GalleryPreview}></Route> */}
 
         {/*Demo Pages*/}
-        <Route exact path={`${process.env.PUBLIC_URL}/pages/terms-policy`} component={Terms}></Route>
+        {/* <Route exact path={`${process.env.PUBLIC_URL}/pages/terms-policy`} component={Terms}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/pages/faq`} component={Faq}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/pages/regular-v1`} component={Regularv1}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/pages/regular-v2`} component={Regularv2}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/pages/regular-v2`} component={Regularv2}></Route> */}
 
         {/*Application*/}
-        <Route exact path={`${process.env.PUBLIC_URL}/app-messages`} component={AppMessages}></Route>
+        {/* <Route exact path={`${process.env.PUBLIC_URL}/app-messages`} component={AppMessages}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/app-chat`} component={Chat}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/app-calender`} component={Calender}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/app-kanban`} component={Kanban}></Route>
@@ -314,10 +319,10 @@ const Pages = () => {
               <FileManager />
             </FileManagerContextProvider>
           )}
-        ></Route>
+        ></Route> */}
 
         {/*Components*/}
-        <Route exact path={`${process.env.PUBLIC_URL}/components`} component={Component}></Route>
+        {/* <Route exact path={`${process.env.PUBLIC_URL}/components`} component={Component}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/components/accordions`} component={Accordian}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/components/alerts`} component={Alerts}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/components/avatar`} component={Avatar}></Route>
@@ -382,7 +387,7 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/nioicon`} component={NioIconPage}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/svg-icons`} component={SVGIconPage}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
-        <Route component={RedirectAs404}></Route>
+        <Route component={RedirectAs404}></Route> */}
       </Switch>
     </Suspense>
   );

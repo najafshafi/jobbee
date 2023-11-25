@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
-import { RedirectAs404 } from "./utils/Utils";
+import { RedirectAs404, getToken } from "./utils/Utils";
 import PrivateRoute from "./route/PrivateRoute";
 
 import Layout from "./layout/Index";
@@ -12,21 +12,43 @@ import Error504Classic from "./pages/error/504-classic";
 
 import Faq from "./pages/others/Faq";
 import Terms from "./pages/others/Terms";
-
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import Success from "./pages/auth/Success";
 import InvoicePrint from "./pages/pre-built/invoice/InvoicePrint";
+import { useDispatch, useSelector } from "react-redux";
+import * as actionTypes from "./store/actions";
+import { profile } from "./services/apis";
+import AuthRoute from "./route/AuthRoute";
+import { initialSesstin } from "./store/configureStore";
 
-const App = (props) => {
+const App = () => {
+  const { IsInitiated } = useSelector(state => state.app);
+  const { isLogin, tokens } = useSelector(state => state.auth);
+
+  const [isLoading, setIsloading] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(async () => {
+    initialSesstin(tokens);
+    dispatch({ type: actionTypes.INITIATED, IsInitiated: true });
+    if (isLogin) {
+      setIsloading(true);
+      profile().then((data) => {
+        dispatch({ type: actionTypes.USER, user: data.data.user, isLogin: true });
+        setIsloading(false);
+      }).catch((error) => {
+        console.log(error)
+        dispatch({ type: actionTypes.USER, isLogin: false });
+        setIsloading(false);
+      })
+    }
+
+  }, [IsInitiated, isLogin]);
+
+  if (!IsInitiated) {
+    return null;
+  }
+
+
   return (
     <Switch>
-      {/* Auth Pages */}
-      <Route exact path={`${process.env.PUBLIC_URL}/auth-success`} component={Success}></Route>
-      <Route exact path={`${process.env.PUBLIC_URL}/auth-reset`} component={ForgotPassword}></Route>
-      <Route exact path={`${process.env.PUBLIC_URL}/auth-register`} component={Register}></Route>
-      <Route exact path={`${process.env.PUBLIC_URL}/auth-login`} component={Login}></Route>
 
       {/* Print Pages */}
       <Route exact path={`${process.env.PUBLIC_URL}/invoice-print/:id`} component={InvoicePrint}></Route>
@@ -44,8 +66,12 @@ const App = (props) => {
       <Route exact path={`${process.env.PUBLIC_URL}/errors/504-classic`} component={Error504Classic}></Route>
 
       {/*Main Routes*/}
-      <PrivateRoute exact path="" component={Layout}></PrivateRoute>
+      {!isLogin && < AuthRoute />}
+      {isLogin && <PrivateRoute path={`${process.env.PUBLIC_URL}`} component={Layout}></PrivateRoute>}
       <Route component={RedirectAs404}></Route>
+
+
+
     </Switch>
   );
 };

@@ -6,6 +6,8 @@ import User from "./dropdown/user/User";
 import Notification from "./dropdown/notification/Notification";
 import HeaderSearch from "../header-search/HeaderSearch";
 import ChatDropdown from "./dropdown/chat/Chat";
+import { useSelector } from "react-redux";
+
 
 const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
   const headerClass = classNames({
@@ -15,6 +17,8 @@ const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
     [`is-${theme}`]: theme !== "white" && theme !== "light",
     [`${className}`]: className,
   });
+  const { user } = useSelector(state => state.auth);
+
   return (
     <div className={headerClass}>
       <div className="container-fluid">
@@ -34,14 +38,14 @@ const Header = ({ fixed, theme, className, setVisibility, ...props }) => {
           </div>
           <div className="nk-header-tools">
             <ul className="nk-quick-nav">
-              <li className="chats-dropdown hide-mb-xs"  onClick={() => setVisibility(false)}>
+              <li className="chats-dropdown hide-mb-xs" onClick={() => setVisibility(false)}>
                 <ChatDropdown />
               </li>
-              <li className="notification-dropdown me-n1"  onClick={() => setVisibility(false)}>
+              <li className="notification-dropdown me-n1" onClick={() => setVisibility(false)}>
                 <Notification />
               </li>
-              <li className="user-dropdown"  onClick={() => setVisibility(false)}>
-                <User />
+              <li className="user-dropdown" onClick={() => setVisibility(false)}>
+                <User user={user} />
               </li>
             </ul>
           </div>

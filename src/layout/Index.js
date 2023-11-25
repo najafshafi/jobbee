@@ -5,6 +5,7 @@ import Head from "./head/Head";
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
 import classNames from "classnames";
+import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
   //Sidebar
@@ -86,6 +87,7 @@ const Layout = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <Head title="Loading" />
       <div className="nk-app-root">
         <div className="nk-main">

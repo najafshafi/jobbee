@@ -18,6 +18,7 @@ import * as actionTypes from "./store/actions";
 import { profile } from "./services/apis";
 import AuthRoute from "./route/AuthRoute";
 import { initialSesstin } from "./store/configureStore";
+import UpdatePassword from "./pages/auth/UpdatePassword";
 
 const App = () => {
   const { IsInitiated } = useSelector(state => state.app);
@@ -64,6 +65,10 @@ const App = () => {
       <Route exact path={`${process.env.PUBLIC_URL}/errors/504-modern`} component={Error504Modern}></Route>
       <Route exact path={`${process.env.PUBLIC_URL}/errors/404-modern`} component={Error404Modern}></Route>
       <Route exact path={`${process.env.PUBLIC_URL}/errors/504-classic`} component={Error504Classic}></Route>
+
+      {/*Auth Pages*/}
+      <Route exact path={`${process.env.PUBLIC_URL}/auth-update`} component={UpdatePassword}></Route>
+
 
       {/*Main Routes*/}
       {!isLogin && < AuthRoute />}

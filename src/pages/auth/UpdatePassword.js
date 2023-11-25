@@ -17,41 +17,37 @@ import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { login } from "../../services/apis";
-import { useDispatch } from "react-redux";
+import { updatepassword } from "../../services/apis";
 import * as actionTypes from "../../store/actions";
-import { initialSesstin } from "../../store/configureStore";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
-const Login = () => {
+const UpdatePassword = (props) => {
+
 
   const [loading, setLoading] = useState(false);
-  const [passState, setPassState] = useState(false);
   const [errorVal, setError] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [_password, _setPassword] = useState("");
   const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
+
+  const { history } = props;
 
   const onFormSubmit = () => {
     setLoading(true);
-    login({ email: email, password: password, login_with: 'Auth' }).then((data) => {
-      if (!data.data.status) {
-        initialSesstin(data.data.tokens);
-        setLoading(false);
-        dispatch({
-          type: actionTypes.LOGIN,
-          tokens: data.data.tokens,
-          user: data.data.user,
-          isLogin: true
-        });
-      } else {
-        setLoading(false);
-      }
+    updatepassword({ password }).then((_) => {
+      setLoading(false);
+      dispatch({
+        type: actionTypes.USER,
+        user: { ...user, passwordChangeRequired: 0 },
+      });
+      history.push(`${process.env.PUBLIC_URL}`);
 
     }).catch((error) => {
       console.log(error);
-      setError(error)
+      setError(error.response?.data?.message)
       setLoading(false);
     })
   };
@@ -73,9 +69,9 @@ const Login = () => {
           <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
             <BlockHead>
               <BlockContent>
-                <BlockTitle tag="h4">Sign-In</BlockTitle>
+                <BlockTitle tag="h4">Changing the password</BlockTitle>
                 <BlockDes>
-                  <p>Access JOBSWITCH using your email and password.</p>
+                  <p>If you log in with a temporary password, The service is available after the first change..</p>
                 </BlockDes>
               </BlockContent>
             </BlockHead>
@@ -83,73 +79,54 @@ const Login = () => {
               <div className="mb-3">
                 <Alert color="danger" className="alert-icon">
                   {" "}
-                  <Icon name="alert-circle" /> Unable to login with credentials{" "}
+                  <Icon name="alert-circle" /> {errorVal}
                 </Alert>
               </div>
             )}
             <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
               <div className="form-group">
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="default-01">
-                    Email
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    type="text"
-                    id="default-01"
-                    name="email"
-                    required
-                    onChange={(evt) => {
-                      setEmail(evt.target.value)
-                    }}
-                    ref={register({ required: "This field is required" })}
-                    placeholder="Enter your email address "
-                    className="form-control-lg form-control"
-                  />
-                  {errors.name && <span className="invalid">{errors.name.message}</span>}
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="password">
-                    Password
-                  </label>
-                  <Link className="link link-primary link-sm" to={`${process.env.PUBLIC_URL}/auth-reset`}>
-                    Forgot Password?
-                  </Link>
-                </div>
-                <div className="form-control-wrap">
-                  <a
-                    href="#password"
-                    onClick={(ev) => {
-                      ev.preventDefault();
-                      setPassState(!passState);
-                    }}
-                    className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
-                  >
-                    <Icon name="eye" className="passcode-icon icon-show"></Icon>
 
-                    <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
-                  </a>
+                <div className="form-control-wrap">
                   <input
-                    type={passState ? "text" : "password"}
+                    type={"password"}
                     id="password"
                     required
                     onChange={(evt) => {
                       setPassword(evt.target.value)
                     }}
-                    name="passcode"
+                    name="password"
                     ref={register({ required: "This field is required" })}
                     placeholder="Enter your Password"
-                    className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
+                    className={`form-control-lg form-control is-hidden"}`}
                   />
                   {errors.passcode && <span className="invalid">{errors.passcode.message}</span>}
                 </div>
+
               </div>
               <div className="form-group">
-                <Button size="lg" className="btn-block" type="submit" color="primary">
-                  {loading ? <Spinner size="sm" color="light" /> : "Sign in"}
+
+
+                <div className="form-control-wrap">
+                  <input
+                    type={"password"}
+                    id="re-password"
+                    required
+                    onChange={(evt) => {
+                      _setPassword(evt.target.value)
+                    }}
+                    name="password"
+                    ref={register({ required: "This field is required" })}
+                    placeholder="Re-enter your Password"
+                    className={`form-control-lg form-control is-hidden"}`}
+                  />
+                  {errors.passcode && <span className="invalid">{errors.passcode.message}</span>}
+                </div>
+
+
+              </div>
+              <div className="form-group">
+                <Button size="lg" className="btn-block" type="submit" color="primary" disabled={password === '' || password !== _password}>
+                  {loading ? <Spinner size="sm" color="light" /> : "Confirm"}
                 </Button>
               </div>
             </Form>
@@ -160,4 +137,4 @@ const Login = () => {
     </React.Fragment>
   );
 };
-export default Login;
+export default UpdatePassword;

@@ -30,6 +30,7 @@ import Head from "../layout/head/Head";
 import { Link } from "react-router-dom";
 import { getTime } from "../utils/Utils";
 import moment from "moment";
+import { deleteUsers } from "../services/apis";
 
 
 export const userTypeOptions = [
@@ -68,7 +69,7 @@ const UserManagment = () => {
   const [sortBy, setSortBy] = useState("asc");
 
 
-  useEffect(() => {
+  const params = () => {
     const params = { limit, page, sortBy: 'createdAt:' + sortBy };
     if (keyword) {
       params.keyword = keyword;
@@ -81,7 +82,12 @@ const UserManagment = () => {
     if (hiringStatus)
       params.hiringStatus = hiringStatus.value;
 
-    fetchData(params);
+    return params;
+  }
+
+
+  useEffect(() => {
+    fetchData(params());
   }, [page, limit, sortBy, keyword, userStatus, userType, hiringStatus]);
 
 
@@ -118,11 +124,27 @@ const UserManagment = () => {
   };
 
 
+
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const onDelete = () => {
+    setDeleteLoading(true);
+    let users = data.results.filter((item) => item.checked === true);
+    deleteUsers({ users: users.map((item) => { return { _id: item._id } }) }).then((_) => {
+      setDeleteLoading(false);
+      fetchData(params());
+    }).catch((error) => {
+      console.log(error);
+      setDeleteLoading(false);
+    });
+  };
+
+
+
+
   return (
     <React.Fragment>
-      <Head title="User List - Regular"></Head>
+      <Head title="User List"></Head>
       <Content>
-
 
 
         <BlockHead size="sm">
@@ -437,8 +459,10 @@ const UserManagment = () => {
               {currentItems.length > 0 ? (
                 <ul className="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                   <li>
-                    <Button color="danger" size="md" type="submit" disabled={!currentItems.some((item) => item.checked === true)}>
-                      Delete Selection
+                    <Button color="danger" size="md" disabled={!currentItems.some((item) => item.checked === true)} onClick={() => {
+                      onDelete()
+                    }} >
+                      {deleteLoading ? <Spinner size="sm" color="light" /> : "Delete Selection"}
                     </Button>
                   </li>
                   <li>

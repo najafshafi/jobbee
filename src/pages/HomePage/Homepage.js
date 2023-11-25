@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import Head from "../layout/head/Head";
-import Content from "../layout/content/Content";
-import DataCard from "../components/partials/default/DataCard";
+import Head from "../../layout/head/Head";
+import Content from "../../layout/content/Content";
+import DataCard from "../../components/partials/default/DataCard";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+import { Link } from "react-router-dom";
 import classnames from "classnames";
+import { Card } from "reactstrap";
 
 import {
   Block,
@@ -15,7 +17,7 @@ import {
   Row,
   Col,
   BlockBetween,
-} from "../components/Component";
+} from "../../components/Component";
 const Homepage = () => {
   const [sm, updateSm] = useState(false);
 
@@ -84,11 +86,46 @@ const Homepage = () => {
                 <Col xxl="3" sm="6">
                   <DataCard title="Subscribers" amount={"3"} />
                 </Col>
+
                 <Col xxl="3" sm="6">
-                  <DataCard title="The person visit" amount={"44"} />
+                  <Link exact to={`${process.env.PUBLIC_URL}/the-person-visit`}>
+                    <Card>
+                      <div className="nk-ecwg nk-ecwg6">
+                        <div className="card-inner">
+                          <div className="card-title-group">
+                            <div className="card-title">
+                              <h6 className="title">The Person Visit</h6>
+                            </div>
+                          </div>
+                          <div className="data">
+                            <div className="data-group">
+                              <div className="amount text-info">43</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
                 </Col>
                 <Col xxl="3" sm="6">
-                  <DataCard title="Logged in area" amount={"12"} />
+                  <Link exact to={`${process.env.PUBLIC_URL}/logged-in-area`}>
+                    <Card>
+                      <div className="nk-ecwg nk-ecwg6">
+                        <div className="card-inner">
+                          <div className="card-title-group">
+                            <div className="card-title">
+                              <h6 className="title">Logged In Area</h6>
+                            </div>
+                          </div>
+                          <div className="data">
+                            <div className="data-group">
+                              <div className="amount text-info">233</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
                 </Col>
               </Row>
 

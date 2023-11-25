@@ -4,7 +4,11 @@ import { ProductContextProvider } from "../pages/pre-built/products/ProductConte
 import { UserContextProvider } from "../pages/pre-built/user-manage/UserContext";
 import { RedirectAs404 } from "../utils/Utils";
 
-import Homepage from "../pages/Homepage";
+import Homepage from "../pages/HomePage/Homepage";
+//child
+import LoggedInArea from "../pages/HomePage/LoggedInArea";
+import ThePersonVisit from "../pages/HomePage/ThePersonVisit";
+//other
 import UserManagment from "../pages/UserManagment";
 import MatchingManagment from "../pages/MatchingManagment";
 import JobManagment from "../pages/JobManagment";
@@ -123,6 +127,9 @@ const Pages = () => {
     <Suspense fallback={<div />}>
       <Switch>
         {/*Dashboards*/}
+
+        <Route exact path={`${process.env.PUBLIC_URL}/the-person-visit`} component={ThePersonVisit}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/logged-in-area`} component={LoggedInArea}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/user-managment`} component={UserManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/matching-managment`} component={MatchingManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/job-managment`} component={JobManagment}></Route>

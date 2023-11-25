@@ -1,12 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  DropdownMenu,
-  DropdownToggle,
-  UncontrolledDropdown,
-  DropdownItem,
-  Spinner,
-  Badge,
-} from "reactstrap";
+import { DropdownMenu, DropdownToggle, UncontrolledDropdown, DropdownItem, Spinner, Badge } from "reactstrap";
 import {
   Block,
   BlockBetween,
@@ -32,10 +25,9 @@ import { getTime } from "../utils/Utils";
 import moment from "moment";
 import { deleteUsers } from "../services/apis";
 
-
 export const userTypeOptions = [
-  { value: 'employer', label: "Company" },
-  { value: 'employee', label: "Employee" },
+  { value: "employer", label: "Company" },
+  { value: "employee", label: "Employee" },
 ];
 
 export const hiringStatusOptions = [
@@ -44,12 +36,10 @@ export const hiringStatusOptions = [
 ];
 
 export const accountStatusOptions = [
-  { value: 0, label: "Pending", color: 'warning' },
-  { value: 1, label: "Active", color: 'success' },
-  { value: 2, label: "Suspend", color: 'danger' },
+  { value: 0, label: "Pending", color: "warning" },
+  { value: 1, label: "Active", color: "success" },
+  { value: 2, label: "Suspend", color: "danger" },
 ];
-
-
 
 const UserManagment = () => {
   const { loading, data, setData, fetchData } = useContext(UserContext);
@@ -62,34 +52,26 @@ const UserManagment = () => {
   const [userType, setUserType] = useState(null);
   const [hiringStatus, setHiringStatus] = useState(null);
 
-
-
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [sortBy, setSortBy] = useState("asc");
 
-
   const params = () => {
-    const params = { limit, page, sortBy: 'createdAt:' + sortBy };
+    const params = { limit, page, sortBy: "createdAt:" + sortBy };
     if (keyword) {
       params.keyword = keyword;
     }
 
-    if (userStatus)
-      params.active = userStatus.value;
-    if (userType)
-      params.type = userType.value;
-    if (hiringStatus)
-      params.hiringStatus = hiringStatus.value;
+    if (userStatus) params.active = userStatus.value;
+    if (userType) params.type = userType.value;
+    if (hiringStatus) params.hiringStatus = hiringStatus.value;
 
     return params;
-  }
-
+  };
 
   useEffect(() => {
     fetchData(params());
   }, [page, limit, sortBy, keyword, userStatus, userType, hiringStatus]);
-
 
   // onChange function for searching name
   const onFilterChange = (e) => {
@@ -110,8 +92,6 @@ const UserManagment = () => {
     setData({ ...data, results: [...newData] });
   };
 
-
-
   const onSelectChange = (e, id) => {
     let newData;
     newData = data.results.map((item) => {
@@ -123,30 +103,29 @@ const UserManagment = () => {
     setData({ ...data, results: [...newData] });
   };
 
-
-
   const [deleteLoading, setDeleteLoading] = useState(false);
   const onDelete = () => {
     setDeleteLoading(true);
     let users = data.results.filter((item) => item.checked === true);
-    deleteUsers({ users: users.map((item) => { return { _id: item._id } }) }).then((_) => {
-      setDeleteLoading(false);
-      fetchData(params());
-    }).catch((error) => {
-      console.log(error);
-      setDeleteLoading(false);
-    });
+    deleteUsers({
+      users: users.map((item) => {
+        return { _id: item._id };
+      }),
+    })
+      .then((_) => {
+        setDeleteLoading(false);
+        fetchData(params());
+      })
+      .catch((error) => {
+        console.log(error);
+        setDeleteLoading(false);
+      });
   };
-
-
-
 
   return (
     <React.Fragment>
       <Head title="User List"></Head>
       <Content>
-
-
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
@@ -162,7 +141,6 @@ const UserManagment = () => {
               <div className="card-title-group">
                 <div className="card-tools">
                   <div className="form-inline flex-nowrap gx-3">
-
                     <div className="form-wrap">
                       <RSelect
                         options={userTypeOptions}
@@ -171,14 +149,13 @@ const UserManagment = () => {
                         placeholder="User Classification"
                         onChange={(e) => {
                           if (userType === null || userType?.value !== e.value) {
-                            setUserType(e)
+                            setUserType(e);
                           } else {
-                            setUserType(null)
+                            setUserType(null);
                           }
                         }}
                       />
                     </div>
-
 
                     <div className="form-wrap">
                       <RSelect
@@ -188,9 +165,9 @@ const UserManagment = () => {
                         placeholder="User Status"
                         onChange={(e) => {
                           if (userStatus === null || userStatus?.value !== e.value) {
-                            setUserStatus(e)
+                            setUserStatus(e);
                           } else {
-                            setUserStatus(null)
+                            setUserStatus(null);
                           }
                         }}
                       />
@@ -204,9 +181,9 @@ const UserManagment = () => {
                         placeholder="Searching / Hiring"
                         onChange={(e) => {
                           if (hiringStatus === null || hiringStatus?.value !== e.value) {
-                            setHiringStatus(e)
+                            setHiringStatus(e);
                           } else {
-                            setHiringStatus(null)
+                            setHiringStatus(null);
                           }
                         }}
                       />
@@ -397,73 +374,79 @@ const UserManagment = () => {
               {/*Head*/}
               {currentItems.length > 0
                 ? currentItems.map((item, index) => {
-                  return (
-                    <DataTableItem key={item._id}>
-                      <DataTableRow className="nk-tb-col-check">
-                        <div className="custom-control custom-control-sm custom-checkbox notext">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            defaultChecked={item.checked}
-                            id={item._id}
-                            key={Math.random()}
-                            onChange={(e) => onSelectChange(e, item._id)}
-                          />
-                          <label className="custom-control-label" htmlFor={item._id}></label>
-                        </div>
-                      </DataTableRow>
-                      <DataTableRow>
-                        <span>{index + 1}</span>
-                      </DataTableRow>
-                      
-                      <DataTableRow size="mb">
-                        <Link to={`${process.env.PUBLIC_URL}/user-details/${item._id}`}>
-                          {item.name}
-                        </Link>
-                      </DataTableRow>
+                    return (
+                      <DataTableItem key={item._id}>
+                        <DataTableRow className="nk-tb-col-check">
+                          <div className="custom-control custom-control-sm custom-checkbox notext">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input"
+                              defaultChecked={item.checked}
+                              id={item._id}
+                              key={Math.random()}
+                              onChange={(e) => onSelectChange(e, item._id)}
+                            />
+                            <label className="custom-control-label" htmlFor={item._id}></label>
+                          </div>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span>{index + 1}</span>
+                        </DataTableRow>
 
-                      <DataTableRow size="mb">
-                        <span>{item.phone}</span>
-                      </DataTableRow>
-                      <DataTableRow size="md">
-                        <span>{userTypeOptions.find((type) => type.value === item.type)?.label || item.role}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{item.email}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{item.registeredBy}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{item.location ?? "-"}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{item.memberShip ?? "General"}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{item.hiringStatus ? "Yes" : "No"}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{moment(item.lastLogin ?? item.createdAt).format('YYYY-MM-DD hh:mm')}</span>
-                      </DataTableRow>
-                      <DataTableRow size="lg">
-                        <span>{getTime(item.lastLogin ?? item.createdAt)}</span>
-                      </DataTableRow>
-                      <DataTableRow size="md">
-                        <Badge color={accountStatusOptions.find((status) => status.value === item.active).color}> {accountStatusOptions.find((status) => status.value === item.active).label}</Badge>
-                      </DataTableRow>
-                    </DataTableItem>
-                  );
-                })
+                        <DataTableRow size="mb">
+                          <Link to={`${process.env.PUBLIC_URL}/user-details/${item._id}`}>{item.name}</Link>
+                        </DataTableRow>
+
+                        <DataTableRow size="mb">
+                          <span>{item.phone}</span>
+                        </DataTableRow>
+                        <DataTableRow size="md">
+                          <span>{userTypeOptions.find((type) => type.value === item.type)?.label || item.role}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{item.email}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{item.registeredBy}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{item.location ?? "-"}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{item.memberShip ?? "General"}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{item.hiringStatus ? "Yes" : "No"}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{moment(item.lastLogin ?? item.createdAt).format("YYYY-MM-DD hh:mm")}</span>
+                        </DataTableRow>
+                        <DataTableRow size="lg">
+                          <span>{getTime(item.lastLogin ?? item.createdAt)}</span>
+                        </DataTableRow>
+                        <DataTableRow size="md">
+                          <Badge color={accountStatusOptions.find((status) => status.value === item.active).color}>
+                            {" "}
+                            {accountStatusOptions.find((status) => status.value === item.active).label}
+                          </Badge>
+                        </DataTableRow>
+                      </DataTableItem>
+                    );
+                  })
                 : null}
             </DataTableBody>
             <div className="card-inner">
               {currentItems.length > 0 ? (
                 <ul className="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                   <li>
-                    <Button color="danger" size="md" disabled={!currentItems.some((item) => item.checked === true)} onClick={() => {
-                      onDelete()
-                    }} >
+                    <Button
+                      color="danger"
+                      size="md"
+                      disabled={!currentItems.some((item) => item.checked === true)}
+                      onClick={() => {
+                        onDelete();
+                      }}
+                    >
                       {deleteLoading ? <Spinner size="sm" color="light" /> : "Delete Selection"}
                     </Button>
                   </li>
@@ -476,22 +459,19 @@ const UserManagment = () => {
                     />
                   </li>
                 </ul>
-
               ) : (
                 <div className="text-center">
-                  <span className="text-silent">{!loading && 'No data found'}</span>
+                  <span className="text-silent">{!loading && "No data found"}</span>
                   {loading && (
                     <div className="loading-layer">
                       <Spinner color="primary" />
                     </div>
                   )}
                 </div>
-
               )}
             </div>
           </DataTable>
         </Block>
-
       </Content>
     </React.Fragment>
   );

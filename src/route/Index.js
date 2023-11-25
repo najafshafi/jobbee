@@ -89,7 +89,7 @@ import ProjectListPage from "../pages/pre-built/projects/ProjectList";
 import UserListDefaultPage from "../pages/pre-built/user-manage/UserListDefault";
 import UserListRegularPage from "../pages/pre-built/user-manage/UserListRegular";
 import UserContactCardPage from "../pages/pre-built/user-manage/UserContactCard";
-import UserDetailsPage from "../pages/pre-built/user-manage/UserDetailsRegular";
+import UserDetails from "../pages/pre-built/user-manage/UserDetails";
 import UserListCompact from "../pages/pre-built/user-manage/UserListCompact";
 import UserProfileLayout from "../pages/pre-built/user-manage/UserProfileLayout";
 import OrderDefault from "../pages/pre-built/orders/OrderDefault";
@@ -130,7 +130,9 @@ const Pages = () => {
 
         <Route exact path={`${process.env.PUBLIC_URL}/the-person-visit`} component={ThePersonVisit}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/logged-in-area`} component={LoggedInArea}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/user-managment`}
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/user-managment`}
           render={() => (
             <UserContextProvider>
               <UserManagment />
@@ -151,9 +153,18 @@ const Pages = () => {
 
         <Route exact path={`${process.env.PUBLIC_URL}/_blank`} component={Blank}></Route>
 
-
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
-        
+
+        <Route //Context Api added
+          exact
+          path={`${process.env.PUBLIC_URL}/user-details/:id`}
+          render={(props) => (
+            <UserContextProvider>
+              <UserDetails {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+
         {/* <Route exact path={`${process.env.PUBLIC_URL}/project-card`} component={ProjectCardPage}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/project-list`} component={ProjectListPage}></Route>
         <Route //Context Api added

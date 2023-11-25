@@ -5,7 +5,6 @@ import { Button } from "reactstrap";
 import classnames from "classnames";
 
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
-import { Card } from "react-bootstrap";
 const LoggedInArea = () => {
   const [activeTab, setActiveTab] = useState("1");
 

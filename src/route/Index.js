@@ -151,6 +151,9 @@ const Pages = () => {
 
         <Route exact path={`${process.env.PUBLIC_URL}/_blank`} component={Blank}></Route>
 
+
+        <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
+        
         {/* <Route exact path={`${process.env.PUBLIC_URL}/project-card`} component={ProjectCardPage}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/project-list`} component={ProjectListPage}></Route>
         <Route //Context Api added
@@ -386,7 +389,7 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/email-template`} component={EmailTemplate}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/nioicon`} component={NioIconPage}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/svg-icons`} component={SVGIconPage}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
+
         <Route component={RedirectAs404}></Route> */}
       </Switch>
     </Suspense>

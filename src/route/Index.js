@@ -90,6 +90,7 @@ import UserListDefaultPage from "../pages/pre-built/user-manage/UserListDefault"
 import UserListRegularPage from "../pages/pre-built/user-manage/UserListRegular";
 import UserContactCardPage from "../pages/pre-built/user-manage/UserContactCard";
 import UserDetails from "../pages/pre-built/user-manage/UserDetails";
+import UserAccount from "../pages/pre-built/user-manage/UserAccount";
 import UserListCompact from "../pages/pre-built/user-manage/UserListCompact";
 import UserProfileLayout from "../pages/pre-built/user-manage/UserProfileLayout";
 import OrderDefault from "../pages/pre-built/orders/OrderDefault";
@@ -155,12 +156,22 @@ const Pages = () => {
 
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
 
-        <Route //Context Api added
+        <Route
           exact
           path={`${process.env.PUBLIC_URL}/user-details/:id`}
           render={(props) => (
             <UserContextProvider>
               <UserDetails {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/user-details/account/:id`}
+          render={(props) => (
+            <UserContextProvider>
+              <UserAccount {...props} />
             </UserContextProvider>
           )}
         ></Route>

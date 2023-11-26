@@ -1,0 +1,9 @@
+th{
+  line-height: unset !important;
+  background-color: rgba(228, 228, 228, 0.623) !important;
+  text-wrap: nowrap;
+}
+
+table{
+  table-layout: fixed;
+}

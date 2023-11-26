@@ -2,8 +2,9 @@ import React from "react";
 import Content from "../../../layout/content/Content";
 import Head from "../../../layout/head/Head";
 import { Button, Icon } from "../../../components/Component";
-import { Badge } from "reactstrap";
 import { Block, PreviewCard } from "../../../components/Component";
+import "./UserDetails.css";
+import { Link } from "react-router-dom";
 const UserDetails = ({ match }) => {
   const id = match.params.id;
   return (
@@ -22,45 +23,39 @@ const UserDetails = ({ match }) => {
             <Button className="m-2" color="danger">
               Forced cut it off user
             </Button>
-            <Button color="danger"> User account</Button>
+            <Link to={`${process.env.PUBLIC_URL}/user-details/account/${id}`}>
+              <Button color="danger"> User account</Button>
+            </Link>
           </div>
-          {/* 
-          Dynamic class Should be made for this badge. If not Seeking then color = Danger and Text = Not Seeking Job
-          */}
-          <div>
-            <Badge pill color="success">
-              Seeking Job
-            </Badge>
+          <div className="row">
+            <div className="col-6 p-0">
+              <label htmlFor="customSwitch3">Seeking Job</label>
+              <hr className="my-1" />
+            </div>
+            <div className="col-2">
+              <div className="custom-control custom-switch">
+                <input type="checkbox" className="custom-control-input" defaultChecked id="customSwitch3" />
+                <label className="custom-control-label" htmlFor="customSwitch3"></label>
+              </div>
+            </div>
           </div>
         </div>
         <Block size="lg">
           <PreviewCard>
             <div>
               <table className="table table-bordered w-100">
-                <thead></thead>
                 <tbody>
                   <tr>
                     <th scope="row">UserID</th>
                     <td>{id}</td>
                     <th>First Name / Last Name</th>
                     <td>John / Smith</td>
-                    <th colSpan={2} className="text-center">
-                      Image
-                    </th>
                   </tr>
                   <tr>
                     <th scope="row">Phone Number</th>
                     <td>+1 323 2323 2323</td>
                     <th>Email</th>
                     <td>Johnsmith@jobus.com</td>
-                    <td rowSpan={5} colSpan={2} className="m-7 text-center">
-                      <img
-                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        width="200"
-                        height="200"
-                        alt="User img"
-                      ></img>
-                    </td>
                   </tr>
                   <tr>
                     <th scope="row">Subscription Type</th>
@@ -80,7 +75,6 @@ const UserDetails = ({ match }) => {
                     <th>Membership Type</th>
                     <td>Premium Membership</td>
                   </tr>
-
                   <tr>
                     <th>Gender</th>
                     <td>Male</td>
@@ -129,6 +123,17 @@ const UserDetails = ({ match }) => {
                     <td>2021-10-10 15:30 YYYY-MM-DD hh</td>
                     <th>User Status</th>
                     <td>Dormant account or activated account</td>
+                  </tr>
+                  <tr>
+                    <th className="text-center align-middle">Image</th>
+                    <td className="m-7 text-center">
+                      <img
+                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        width="200"
+                        height="200"
+                        alt="User img"
+                      ></img>
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -1,22 +1,54 @@
 import React, { useState, createContext } from "react";
-import { users } from "../services/apis";
+import { user, users } from "../services/apis";
 
 export const UserContext = createContext();
+
 export const UserContextProvider = (props) => {
-
-  const [data, setData] = useState({ results: [] });
   const [loading, setLoading] = useState(false);
+  const [userLaoded, setUserLoaded] = useState(false);
+  const [data, setUserList] = useState({ results: [] });
+  const [selectedUser, setSelectedUser] = useState({});
 
-  const fetchData = async (params) => {
-    setLoading(true);
-    users(params).then((data) => {
-      setLoading(false);
-      setData(data.data)
-    })
+  const useUser = () => {
+    const getUser = async (id) => {
+      setLoading(true);
+      try {
+        const response = await user(id);
+        setSelectedUser(response.data);
+        setUserLoaded(true);
+        setLoading(false);
+      } catch (error) {
+        setUserLoaded(false);
+        setLoading(false);
+      }
+    };
+
+    return { getUser, selectedUser, setSelectedUser, userLaoded };
   };
 
+  const useUsers = () => {
+    const fetchUsers = async (params) => {
+      setLoading(true);
+      try {
+        const response = await users(params);
+        setUserList(response.data);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
 
+    return { fetchUsers, data, setUserList };
+  };
 
+  const commonValues = { loading };
+  const usersValue = useUsers();
+  const userValue = useUser();
 
-  return <UserContext.Provider value={{ loading, data, fetchData, setData }}>{props.children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ ...commonValues, ...usersValue, ...userValue }}>
+      {props.children}
+    </UserContext.Provider>
+  );
 };
+
+export default UserContextProvider;

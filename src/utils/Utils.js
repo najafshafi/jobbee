@@ -1,5 +1,6 @@
 import moment from "moment";
 import { Redirect } from "react-router-dom";
+import { URL } from "../services/config";
 
 //url for production
 export var url = "";
@@ -168,7 +169,7 @@ export const editParam = (params) => {
 }
 
 export const imageUrl = (image) => {
-  return 'https://storage.googleapis.com/arpee/public/uploads' + '/original/' + image;
+  return URL + '/uploads/original/' + image;
 }
 
 

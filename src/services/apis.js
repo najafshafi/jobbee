@@ -12,6 +12,10 @@ export const users = (params) => {
     const queryParams = '?' + new URLSearchParams(params).toString();
     return axiosInstance.get('/users' + queryParams);
 }
+
+export const user = (id) => {
+    return axiosInstance.get('/users' + '/' + id);
+}
 export const deleteUsers = (params) => {
     return axiosInstance.post('/users/delete', params);
 }

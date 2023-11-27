@@ -1,5 +1,13 @@
-const DEMO = {
+export const DEMO = {
     BLANK_LINK: "#",
 };
 
-export default DEMO;
+export const UserTypes = {
+    employer: 'employer',
+    employee: 'employee',
+};
+
+
+
+
+

@@ -7,6 +7,17 @@ export const axiosInstance = axios.create({
   timeout: 12000,
 });
 
+// add language 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    config.headers['Accept-Language'] = 'en';
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
   (response) => {

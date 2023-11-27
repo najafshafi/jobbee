@@ -7,7 +7,7 @@ export const UserContextProvider = (props) => {
   const [data, setData] = useState({ results: [] });
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (params) => {
+  const fetchUsers = async (params) => {
     setLoading(true);
     users(params).then((data) => {
       setLoading(false);
@@ -18,5 +18,5 @@ export const UserContextProvider = (props) => {
 
 
 
-  return <UserContext.Provider value={{ loading, data, fetchData, setData }}>{props.children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ loading, data, fetchUsers, setData }}>{props.children}</UserContext.Provider>;
 };

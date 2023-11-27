@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Content from "../../../layout/content/Content";
 import Head from "../../../layout/head/Head";
 import { Button, Icon } from "../../../components/Component";
 import { Block, PreviewCard } from "../../../components/Component";
 import "./UserDetails.css";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../../contexts/UserContext";
+import moment from "moment";
+import { accountStatusOptions } from "../../UserManagment";
+import { imageUrl } from "../../../utils/Utils";
+import { UserTypes } from "../../../store/constant";
 const UserDetails = ({ match }) => {
   const id = match.params.id;
+
+
+  const { userLaoded, selectedUser, getUser, loading } = useContext(UserContext);
+
+  useEffect(() => {
+    getUser(id);
+  }, [id]);
+
+
+
+
+
+  if (loading) {
+    return null;
+  }
+
   return (
     <React.Fragment>
       <Head title="User Details"></Head>
@@ -14,7 +35,6 @@ const UserDetails = ({ match }) => {
         <div className="d-flex justify-between align-center">
           <h3>User Details</h3>
           <Button color="primary">
-            <Icon name="list" />
             <span> List</span>
           </Button>
         </div>
@@ -34,13 +54,13 @@ const UserDetails = ({ match }) => {
             </div>
             <div className="col-2">
               <div className="custom-control custom-switch">
-                <input type="checkbox" className="custom-control-input" defaultChecked id="customSwitch3" />
+                <input type="checkbox" className="custom-control-input" defaultChecked={selectedUser.hiringStatus} id="customSwitch3" />
                 <label className="custom-control-label" htmlFor="customSwitch3"></label>
               </div>
             </div>
           </div>
         </div>
-        <Block size="lg">
+        {userLaoded && selectedUser.type === UserTypes.employee && <Block size="lg">
           <PreviewCard>
             <div>
               <table className="table table-bordered w-100">
@@ -49,86 +69,91 @@ const UserDetails = ({ match }) => {
                     <th scope="row">UserID</th>
                     <td>{id}</td>
                     <th>First Name / Last Name</th>
-                    <td>John / Smith</td>
+                    <td>{selectedUser.firstName} / {selectedUser.lastName}</td>
                   </tr>
                   <tr>
                     <th scope="row">Phone Number</th>
-                    <td>+1 323 2323 2323</td>
+                    <td>{selectedUser.phone}</td>
                     <th>Email</th>
-                    <td>Johnsmith@jobus.com</td>
+                    <td>{selectedUser.email}</td>
                   </tr>
                   <tr>
                     <th scope="row">Subscription Type</th>
-                    <td>Google</td>
+                    <td>{selectedUser.registeredBy}</td>
                     <th>Registration Date</th>
-                    <td>2021-05-01 13:30 YYYY-MM-DD hh:mm</td>
+                    <td>{moment(selectedUser.createdAt).format("YYYY-MM-DD hh:mm")}</td>
                   </tr>
                   <tr>
                     <th scope="row">Nationality</th>
-                    <td>Canada</td>
-                    <th>Accepted to Benefit/Event Notifications</th>
+                    <td>{selectedUser.nationality}</td>
+                    <th>Accepted to Benefit/Event<br /> Notifications</th>
                     <td>Y</td>
                   </tr>
                   <tr>
                     <th scope="row">Second Language</th>
-                    <td>Korean(good)/ Vietnam(bad)/English(excellent)</td>
+                    {selectedUser.languages.map((language, index) => (
+                      <td key={`stils-${index}`}>{`${language.language.title} (${language.skill.title})`}</td>
+                    ))
+                    }
                     <th>Membership Type</th>
-                    <td>Premium Membership</td>
+                    <td>{selectedUser.memberShip ?? 'General'}</td>
                   </tr>
                   <tr>
                     <th>Gender</th>
-                    <td>Male</td>
+                    <td>{selectedUser.gender}</td>
                     <th>Date of Birth</th>
-                    <td>YYYY,MM,DD</td>
+                    <td>{moment(selectedUser.dateOfBirth).format("YYYY-MM-DD")}</td>
                   </tr>
                   <tr>
                     <th>Home address</th>
-                    <td colSpan={5}>Road name/Lot number address, detailed address</td>
+                    <td colSpan={5}>{selectedUser.location}</td>
                   </tr>
 
-                  <tr>
-                    <th>Career 1</th>
-                    <td>Welder</td>
-                    <th>Career 2</th>
-                    <td>Cook</td>
-                    <th>Career 3</th>
-                    <td>MCT</td>
-                  </tr>
 
-                  <tr>
-                    <th>Period</th>
-                    <td>less than 6 month</td>
-                    <th>Period</th>
-                    <td>less than 1 Year</td>
-                    <th>Period</th>
-                    <td>less than 5 Years</td>
-                  </tr>
+                  {selectedUser?.experiances?.map((experiance, index) => (
+                    <>
+                      <tr key={`experiances-${index}`}>
+                        <th>Career {index + 1}</th>
+                        {experiance?.careers.map((career, index) => (
+                          <td key={index}>{career?.custom || career?.career?.title}</td>
+                        ))}
+                      </tr>
+                      <tr>
+                        <th>Period</th>
+                        <td>{experiance?.period?.title}</td>
+                      </tr>
+                    </>
+                  ))}
+
+
+
+
                   <tr>
                     <th>Wishing payment</th>
-                    <td>$5000</td>
+                    <td>{selectedUser.salaryExpectation}</td>
                     <th>Currency</th>
-                    <td>$ Dollar </td>
+                    <td>{selectedUser?.currency?.title} </td>
                     <th>Period</th>
-                    <td>Weekly</td>
+                    <td>{selectedUser?.salaryDuration?.title}</td>
                   </tr>
 
                   <tr>
                     <th>Visa Type</th>
-                    <td>D2</td>
+                    <td>{selectedUser.visaType || '-'}</td>
                     <th>Visa Expiration Date</th>
-                    <td>ENFP</td>
+                    <td>{selectedUser.visaExp ? moment(selectedUser.visaExp).format("YYYY-MM-DD") : '-'}</td>
                   </tr>
                   <tr>
                     <th>Final Login</th>
-                    <td>2021-10-10 15:30 YYYY-MM-DD hh</td>
+                    <td>{moment(selectedUser.lastLogin ?? selectedUser.createdAt).format("YYYY-MM-DD hh:mm")}</td>
                     <th>User Status</th>
-                    <td>Dormant account or activated account</td>
+                    <td> {accountStatusOptions.find((status) => status.value === selectedUser.active).label}</td>
                   </tr>
                   <tr>
                     <th className="text-center align-middle">Image</th>
                     <td className="m-7 text-center">
                       <img
-                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src={imageUrl(selectedUser.profile)}
                         width="200"
                         height="200"
                         alt="User img"
@@ -139,9 +164,9 @@ const UserDetails = ({ match }) => {
               </table>
             </div>
           </PreviewCard>
-        </Block>
+        </Block>}
       </Content>
-    </React.Fragment>
+    </React.Fragment >
   );
 };
 export default UserDetails;

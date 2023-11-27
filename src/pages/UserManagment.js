@@ -42,7 +42,7 @@ export const accountStatusOptions = [
 ];
 
 const UserManagment = () => {
-  const { loading, data, setData, fetchData } = useContext(UserContext);
+  const { loading, data, setUserList, fetchUsers } = useContext(UserContext);
 
   const [tablesm, updateTableSm] = useState(false);
   const [onSearch, setonSearch] = useState(true);
@@ -70,7 +70,7 @@ const UserManagment = () => {
   };
 
   useEffect(() => {
-    fetchData(params());
+    fetchUsers(params());
   }, [page, limit, sortBy, keyword, userStatus, userType, hiringStatus]);
 
   // onChange function for searching name
@@ -89,7 +89,7 @@ const UserManagment = () => {
       item.checked = e.currentTarget.checked;
       return item;
     });
-    setData({ ...data, results: [...newData] });
+    setUserList({ ...data, results: [...newData] });
   };
 
   const onSelectChange = (e, id) => {
@@ -100,7 +100,7 @@ const UserManagment = () => {
       }
       return item;
     });
-    setData({ ...data, results: [...newData] });
+    setUserList({ ...data, results: [...newData] });
   };
 
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -114,7 +114,7 @@ const UserManagment = () => {
     })
       .then((_) => {
         setDeleteLoading(false);
-        fetchData(params());
+        fetchUsers(params());
       })
       .catch((error) => {
         console.log(error);

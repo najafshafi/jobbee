@@ -152,12 +152,15 @@ const UserDetails = ({ match }) => {
                   <tr>
                     <th className="text-center align-middle">Image</th>
                     <td className="m-7 text-center">
-                      <img
-                        src={imageUrl(selectedUser.profile)}
-                        width="200"
-                        height="200"
-                        alt="User img"
-                      ></img>
+                      <div className="image-container">
+                        <img
+                          src={imageUrl(selectedUser.profile)}
+                          width="200"
+                          height="200"
+                          alt="User img"
+                          className="img-fluid object-fit-cover"
+                        ></img>
+                      </div>
                     </td>
                   </tr>
                 </tbody>

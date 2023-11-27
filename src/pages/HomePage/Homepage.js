@@ -90,7 +90,7 @@ const Homepage = () => {
                 <Col xxl="3" sm="6">
                   <Link exact to={`${process.env.PUBLIC_URL}/the-person-visit`}>
                     <Card>
-                      <div className="nk-ecwg nk-ecwg6">
+                      <div className="nk-ecwg nk-ecwg6 nk-tb-item">
                         <div className="card-inner">
                           <div className="card-title-group">
                             <div className="card-title">
@@ -110,7 +110,7 @@ const Homepage = () => {
                 <Col xxl="3" sm="6">
                   <Link exact to={`${process.env.PUBLIC_URL}/logged-in-area`}>
                     <Card>
-                      <div className="nk-ecwg nk-ecwg6">
+                      <div className="nk-ecwg nk-ecwg6 nk-tb-item">
                         <div className="card-inner">
                           <div className="card-title-group">
                             <div className="card-title">

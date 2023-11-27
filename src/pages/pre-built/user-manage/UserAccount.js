@@ -7,7 +7,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap
 import "./UserDetails.css";
 const UserDetails = ({ match }) => {
   const id = match.params.id;
-  const [isPerson, setIsPerson] = useState(true);
+  const [isPerson, setIsPerson] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
@@ -337,7 +337,7 @@ const UserDetails = ({ match }) => {
                         </td>
                       </tr>
                       <tr>
-                        <th>Lamguage</th>
+                        <th>Language</th>
                         <td className="text-info fs-16px" colSpan={3}>
                           Korean
                         </td>
@@ -377,10 +377,7 @@ const UserDetails = ({ match }) => {
                             <Dropdown onClick={(ev) => ev.setIsOpen()} toggle={toggle}>
                               <DropdownToggle className="btn-action" color="gray">
                                 <span>Deactivate</span>
-                                <Icon
-                                  name="downward-ios
-"
-                                />
+                                <Icon name="downward-ios" />
                               </DropdownToggle>
                               <DropdownMenu>
                                 <ul className="link-list-opt">
@@ -429,16 +426,149 @@ const UserDetails = ({ match }) => {
         ) : (
           // Render company code
           <div>
-            <h2>Company Profile</h2>
-            {/* Render company profile details */}
-            <p>Company Name: Example Corp</p>
-            {/* Other company profile details */}
+            <div className="d-flex justify-between align-center">
+              <h3>Details of the company</h3>
+              <Button color="primary">
+                <Icon name="list" />
+                <span> List</span>
+              </Button>
+            </div>
+            <div className="d-flex justify-end align-center">
+              <div>
+                <div className="row m-2">
+                  <div className="col-4 p-0">
+                    <label htmlFor="customSwitch3">Hiring</label>
+                    <hr className="my-1" />
+                  </div>
+                  <div className="col-2">
+                    <div className="custom-control custom-switch">
+                      <input type="checkbox" className="custom-control-input" defaultChecked id="customSwitch3" />
+                      <label className="custom-control-label" htmlFor="customSwitch3"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/*
+
+            Table Section
+            
+            */}
+            <Block size="lg">
+              <PreviewCard>
+                <div>
+                  <table className="table table-bordered w-100">
+                    <tbody>
+                      <tr>
+                        <th scope="row">Member type</th>
+                        <td>General member</td>
+                        <th>Name</th>
+                        <td>Kimmint</td>
+                      </tr>
+                      <tr>
+                        <th className="text-center align-middle">Image</th>
+                        <td className="m-7 text-center">
+                          <div className="image-container">
+                            <img
+                              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                              width="150"
+                              height="1500"
+                              alt="User img"
+                              className="img-fluid object-fit-cover"
+                            ></img>
+                          </div>
+                        </td>
+                        <th className="text-center align-middle">Business Number</th>
+                        <td className="align-middle">123-45-67899</td>
+                      </tr>
+                      <tr>
+                        <th className="text-center align-middle">About Company</th>
+                        <td colSpan={3} className="">
+                          I know I can help your company create stunning visuals. As someone who has worked in marketing
+                          and graphic design for over a decade, I know what brands need to capture their audiences'
+                          attention. With my powI know I can help your company create stunning visuals. As someone who
+                          has worked in marketing and graphic design for over a decade, I know what brands need to
+                          capture their audiences' attention. With my powI know I can help your company create stunning
+                          visuals. As someone who has worked in marketing and graphic design for over a decade, I know
+                          what brands need to capture their audiences' attention. With my powI know I can help your
+                          company create stunning visuals. As someone who has worked in marketing and graphic design for
+                          over a decade, I know what brands need to capture their audiences' attention. With my powI
+                          know I can help your company create stunning visuals. As someone who has worked in marketing
+                          and graphic design for over a decade, I know what brands need to capture their audiences'
+                          attention. With my pow
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Post(feed) in Daily</th>
+                        <td>13</td>
+                        <th>Scrapped porst</th>
+                        <td>23</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Follower</th>
+                        <td>11</td>
+                        <th>Following</th>
+                        <td>15</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Industry</th>
+                        <td>Recruting</td>
+                        <th>Company Size</th>
+                        <td>Over 256 Employees</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Phone</th>
+                        <td>031-3939-3939</td>
+                        <th>Email</th>
+                        <td>Naver@gmail.com</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" className="text-center align-middle">
+                          Location(address)
+                        </th>
+                        <td>
+                          <div className="d-flex align-start">
+                            <p className="m-1">#11 256 Yeoksamdong seoul Busan . korea</p>
+                            <span className="m-1 text-nowrap text-azure">Open Map</span>
+                          </div>
+                        </td>
+                        <th className="text-center align-middle">Webisite</th>
+                        <td className=" align-middle">https://www.toso.com</td>
+                      </tr>
+                      <tr>
+                        <th className="text-center align-middle">Photo</th>
+                        <td colSpan={3}>
+                          <div className="image-container">
+                            <img
+                              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                              width="150"
+                              height="1500"
+                              alt="User img"
+                              className="img-fluid object-fit-cover mx-5 m-2"
+                            ></img>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th className="text-center align-middle">Video</th>
+                        <td colSpan={3}>
+                          <video
+                            width="320"
+                            height="240"
+                            className="img-fluid object-fit-cover mx-5 m-2"
+                            controls
+                          ></video>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </PreviewCard>
+            </Block>
           </div>
         )}
       </Content>
-      {/* <Content>
-        
-      </Content> */}
     </React.Fragment>
   );
 };

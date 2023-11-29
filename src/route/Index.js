@@ -10,6 +10,8 @@ import LoggedInArea from "../pages/HomePage/LoggedInArea";
 import ThePersonVisit from "../pages/HomePage/ThePersonVisit";
 //other
 import UserManagment from "../pages/UserManagment";
+//child
+import MatchingPage from "../pages/MatchingPage";
 import MatchingManagment from "../pages/MatchingManagment";
 import JobManagment from "../pages/JobManagment";
 import BannerManagment from "../pages/BannerManagment";
@@ -140,7 +142,18 @@ const Pages = () => {
             </UserContextProvider>
           )}
         ></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/matching-managment`} component={MatchingManagment}></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/matching-managment`}
+          render={(props) => (
+            <UserContextProvider>
+              <MatchingManagment {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/matching-managment/details`} component={MatchingPage}></Route>
+
         <Route exact path={`${process.env.PUBLIC_URL}/job-managment`} component={JobManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/banner-managment`} component={BannerManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/order-managment`} component={OrderManagment}></Route>

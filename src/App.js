@@ -21,8 +21,8 @@ import { initialSesstin } from "./store/configureStore";
 import UpdatePassword from "./pages/auth/UpdatePassword";
 
 const App = () => {
-  const { IsInitiated } = useSelector(state => state.app);
-  const { isLogin, tokens } = useSelector(state => state.auth);
+  const { IsInitiated } = useSelector((state) => state.app);
+  const { isLogin, tokens } = useSelector((state) => state.auth);
 
   const [isLoading, setIsloading] = useState(false);
   const dispatch = useDispatch();
@@ -31,26 +31,25 @@ const App = () => {
     dispatch({ type: actionTypes.INITIATED, IsInitiated: true });
     if (isLogin) {
       setIsloading(true);
-      profile().then((data) => {
-        dispatch({ type: actionTypes.USER, user: data.data.user, isLogin: true });
-        setIsloading(false);
-      }).catch((error) => {
-        console.log(error)
-        dispatch({ type: actionTypes.USER, isLogin: false });
-        setIsloading(false);
-      })
+      profile()
+        .then((data) => {
+          dispatch({ type: actionTypes.USER, user: data.data.user, isLogin: true });
+          setIsloading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          dispatch({ type: actionTypes.USER, isLogin: false });
+          setIsloading(false);
+        });
     }
-
   }, [IsInitiated, isLogin]);
 
   if (!IsInitiated) {
     return null;
   }
 
-
   return (
     <Switch>
-
       {/* Print Pages */}
       <Route exact path={`${process.env.PUBLIC_URL}/invoice-print/:id`} component={InvoicePrint}></Route>
 
@@ -69,14 +68,10 @@ const App = () => {
       {/*Auth Pages*/}
       <Route exact path={`${process.env.PUBLIC_URL}/auth-update`} component={UpdatePassword}></Route>
 
-
       {/*Main Routes*/}
-      {!isLogin && < AuthRoute />}
+      {!isLogin && <AuthRoute />}
       {isLogin && <PrivateRoute path={`${process.env.PUBLIC_URL}`} component={Layout}></PrivateRoute>}
       <Route component={RedirectAs404}></Route>
-
-
-
     </Switch>
   );
 };

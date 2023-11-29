@@ -404,7 +404,7 @@ const UserDetails = ({ match }) => {
                                 </ul>
                               </DropdownMenu>
                             </Dropdown>
-                            <strong className="m-2 text-danger text-decoration-underline">Confirm</strong>
+                            <strong className="mx-5 text-danger text-decoration-underline">Confirm</strong>
                           </div>
                         </td>
                         <th>Last Login</th>
@@ -561,8 +561,106 @@ const UserDetails = ({ match }) => {
                           ></video>
                         </td>
                       </tr>
+                      <tr>
+                        <th className="text-center align-middle">The attached file</th>
+                        <td colSpan={3}>
+                          <div className="d-flex flex-row fs-16px text-nowrap h-100px m-2">
+                            <p className="text-azure">Business License . </p>
+                            <Icon className="mx-2 fs-22px" name="download" />
+                            <p className="text-azure">See</p>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th className="text-center align-middle">Social media link</th>
+                        <td className="p-0">
+                          <div className="fs-16px">
+                            <table className="table table-bordered">
+                              <tr>
+                                <td className="text-azure text-decoration-underline">Facebook</td>
+                              </tr>
+                              <tr>
+                                <td className="text-azure text-decoration-underline">Instagram</td>
+                              </tr>
+                              <tr>
+                                <td className="text-azure text-decoration-underline">Youtube</td>
+                              </tr>
+                              <tr>
+                                <td className="text-azure text-decoration-underline">Twitter(X)</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Company Status</th>
+                        <td className="text-azure">Dormant account or activated account</td>
+                        <th>Panalty issue</th>
+                        <td>suspension / by 2023 12.25</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Activate /Deactivate User position</th>
+                        <td>
+                          <div>
+                            <Dropdown onClick={(ev) => ev.setIsOpen()} toggle={toggle}>
+                              <DropdownToggle className="btn-action" color="gray">
+                                <span>Deactivate</span>
+                                <Icon name="downward-ios" />
+                              </DropdownToggle>
+                              <DropdownMenu>
+                                <ul className="link-list-opt">
+                                  <li>
+                                    <DropdownItem tag="a" href="#links" onClick={(ev) => ev.preventDefault()}>
+                                      <span>Profile Settings</span>
+                                    </DropdownItem>
+                                  </li>
+                                  <li>
+                                    <DropdownItem tag="a" href="#links" onClick={(ev) => ev.preventDefault()}>
+                                      <span>Notifications</span>
+                                    </DropdownItem>
+                                  </li>
+                                  <li>
+                                    <DropdownItem tag="a" href="#links" onClick={(ev) => ev.preventDefault()}>
+                                      <span>Another Action</span>
+                                    </DropdownItem>
+                                  </li>
+                                  <li>
+                                    <DropdownItem tag="a" href="#links" onClick={(ev) => ev.preventDefault()}>
+                                      <span>Something else here</span>
+                                    </DropdownItem>
+                                  </li>
+                                </ul>
+                              </DropdownMenu>
+                            </Dropdown>
+                            <strong className="mx-5 text-danger text-decoration-underline">Confirm</strong>
+                          </div>
+                        </td>
+                        <th>last login</th>
+                        <td className="text-azure fs-16px">YYYY.MM.DD hh.mm</td>
+                      </tr>
                     </tbody>
                   </table>
+                  <div className="mt-5 d-flex justify-content-between">
+                    <div>
+                      <Button className="m-2" color="gray">
+                        Warning
+                      </Button>
+                      <Button className="m-2" color="gray">
+                        Suspension of activities
+                      </Button>
+                      <Button className="m-2" color="danger">
+                        Forced cut it off user
+                      </Button>
+                      <Button className="m-2" color="info">
+                        Add+
+                      </Button>
+                    </div>
+                    <div>
+                      <Button className="m-2" color="secondary">
+                        Penalty cleared
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </PreviewCard>
             </Block>

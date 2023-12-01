@@ -14,6 +14,7 @@ import UserManagment from "../pages/UserManagment";
 import MatchingPage from "../pages/MatchingPage";
 import MatchingManagment from "../pages/MatchingManagment";
 import JobManagment from "../pages/JobManagment";
+import JobManagmentDetails from "../pages/JobManagmentDetails";
 import BannerManagment from "../pages/BannerManagment";
 import OrderManagment from "../pages/OrderManagment";
 import DailyLifeManagment from "../pages/DailyLifeManagment";
@@ -152,9 +153,28 @@ const Pages = () => {
             </UserContextProvider>
           )}
         ></Route>
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/job-managment`}
+          render={(props) => (
+            <UserContextProvider>
+              <JobManagment {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/job-managment/details`}
+          render={(props) => (
+            <UserContextProvider>
+              <JobManagmentDetails {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+
         <Route exact path={`${process.env.PUBLIC_URL}/matching-managment/details`} component={MatchingPage}></Route>
 
-        <Route exact path={`${process.env.PUBLIC_URL}/job-managment`} component={JobManagment}></Route>
+        {/* <Route exact path={`${process.env.PUBLIC_URL}/job-managment`} component={JobManagment}></Route> */}
         <Route exact path={`${process.env.PUBLIC_URL}/banner-managment`} component={BannerManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/order-managment`} component={OrderManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/daily-life-managment`} component={DailyLifeManagment}></Route>

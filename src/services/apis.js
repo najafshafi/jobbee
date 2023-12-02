@@ -24,4 +24,19 @@ export const resetpassword = (params) => {
 }
 export const updatepassword = (params) => {
     return axiosInstance.post('/auth/admin/change-Password', params);
-} 
+}
+
+
+
+export const jobs = (params) => {
+    const queryParams = '?' + new URLSearchParams(params).toString();
+    return axiosInstance.get('/jobs' + queryParams);
+}
+
+export const job = (id) => {
+    return axiosInstance.get('/jobs' + '/' + id);
+}
+
+export const deleteJobs = (params) => {
+    return axiosInstance.post('/jobs/delete', params);
+}

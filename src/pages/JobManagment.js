@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DropdownMenu, DropdownToggle, UncontrolledDropdown, DropdownItem, Spinner, Badge } from "reactstrap";
+import { DropdownMenu, DropdownToggle, UncontrolledDropdown, DropdownItem, Spinner } from "reactstrap";
 import {
   Block,
   BlockBetween,
@@ -21,36 +21,27 @@ import {
 import Content from "../layout/content/Content";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { deleteUsers } from "../services/apis";
-import { UserContext } from "../contexts/UserContext";
+import { deleteJobs } from "../services/apis";
+import { JobsContext } from "../contexts/JobsContext";
 import Head from "../layout/head/Head";
 import { getTime } from "../utils/Utils";
 
-export const userTypeOptions = [
-  { value: "employer", label: "Company" },
-  { value: "employee", label: "Employee" },
+export const JobTypeOptions = [
+  { value: "partime", label: "Partime" },
+  { value: "fulltime", label: "Fulltime" },
+  { value: "freelancer", label: "Freelancer" },
 ];
 
-export const hiringStatusOptions = [
-  { value: 0, label: "Yes" },
-  { value: 1, label: "No" },
-];
-
-export const accountStatusOptions = [
-  { value: 0, label: "Pending", color: "warning" },
-  { value: 1, label: "Active", color: "success" },
-  { value: 2, label: "Suspend", color: "danger" },
-];
 
 const JobManagment = () => {
-  const { loading, data, setUserList, fetchUsers } = useContext(UserContext);
+  const { loading, data, setJobList, fetchJobs } = useContext(JobsContext);
 
   const [tablesm, updateTableSm] = useState(false);
   const [onSearch, setonSearch] = useState(true);
   const [keyword, setkeyword] = useState("");
 
-  const [userStatus, setUserStatus] = useState(null);
-  const [userType, setUserType] = useState(null);
+  const [Jobstatus, setJobstatus] = useState(null);
+  const [JobType, setJobType] = useState(null);
   const [hiringStatus, setHiringStatus] = useState(null);
 
   const [page, setPage] = useState(1);
@@ -63,16 +54,16 @@ const JobManagment = () => {
       params.keyword = keyword;
     }
 
-    if (userStatus) params.active = userStatus.value;
-    if (userType) params.type = userType.value;
+    if (Jobstatus) params.active = Jobstatus.value;
+    if (JobType) params.type = JobType.value;
     if (hiringStatus) params.hiringStatus = hiringStatus.value;
 
     return params;
   };
 
   useEffect(() => {
-    fetchUsers(params());
-  }, [page, limit, sortBy, keyword, userStatus, userType, hiringStatus]);
+    fetchJobs(params());
+  }, [page, limit, sortBy, keyword, Jobstatus, JobType, hiringStatus]);
 
   // onChange function for searching name
   const onFilterChange = (e) => {
@@ -90,7 +81,7 @@ const JobManagment = () => {
       item.checked = e.currentTarget.checked;
       return item;
     });
-    setUserList({ ...data, results: [...newData] });
+    setJobList({ ...data, results: [...newData] });
   };
 
   const onSelectChange = (e, id) => {
@@ -101,21 +92,21 @@ const JobManagment = () => {
       }
       return item;
     });
-    setUserList({ ...data, results: [...newData] });
+    setJobList({ ...data, results: [...newData] });
   };
 
   const [deleteLoading, setDeleteLoading] = useState(false);
   const onDelete = () => {
     setDeleteLoading(true);
-    let users = data.results.filter((item) => item.checked === true);
-    deleteUsers({
-      users: users.map((item) => {
+    let jobs = data.results.filter((item) => item.checked === true);
+    deleteJobs({
+      jobs: jobs.map((item) => {
         return { _id: item._id };
       }),
     })
       .then((_) => {
         setDeleteLoading(false);
-        fetchUsers(params());
+        fetchJobs(params());
       })
       .catch((error) => {
         console.log(error);
@@ -125,7 +116,7 @@ const JobManagment = () => {
 
   return (
     <React.Fragment>
-      <Head title="User Managment"></Head>
+      <Head title="Job Managment"></Head>
       <Content>
         <BlockHead size="sm">
           <BlockBetween>
@@ -144,51 +135,20 @@ const JobManagment = () => {
                   <div className="form-inline flex-nowrap gx-3">
                     <div className="form-wrap">
                       <RSelect
-                        options={userTypeOptions}
+                        options={JobTypeOptions}
                         className="w-200px"
-                        value={userType}
-                        placeholder="Name"
+                        value={JobType}
+                        placeholder="Job Type"
                         onChange={(e) => {
-                          if (userType === null || userType?.value !== e.value) {
-                            setUserType(e);
+                          if (JobType === null || JobType?.value !== e.value) {
+                            setJobType(e);
                           } else {
-                            setUserType(null);
+                            setJobType(null);
                           }
                         }}
                       />
                     </div>
 
-                    {/* <div className="form-wrap">
-                      <RSelect
-                        options={accountStatusOptions}
-                        className="w-200px"
-                        value={userStatus}
-                        placeholder="User Status"
-                        onChange={(e) => {
-                          if (userStatus === null || userStatus?.value !== e.value) {
-                            setUserStatus(e);
-                          } else {
-                            setUserStatus(null);
-                          }
-                        }}
-                      />
-                    </div> */}
-
-                    {/* <div className="form-wrap">
-                      <RSelect
-                        options={hiringStatusOptions}
-                        className="w-200px"
-                        value={hiringStatus}
-                        placeholder="Searching / Hiring"
-                        onChange={(e) => {
-                          if (hiringStatus === null || hiringStatus?.value !== e.value) {
-                            setHiringStatus(e);
-                          } else {
-                            setHiringStatus(null);
-                          }
-                        }}
-                      />
-                    </div> */}
                   </div>
                 </div>
                 <div className="card-tools me-n1">
@@ -311,7 +271,7 @@ const JobManagment = () => {
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
-                      placeholder="Search by entering a username, email, or phone number."
+                      placeholder="Search by entering a Jobname, email, or phone number."
                       value={keyword}
                       onChange={(e) => onFilterChange(e)}
                     />
@@ -336,10 +296,10 @@ const JobManagment = () => {
                   </div>
                 </DataTableRow>
                 <DataTableRow>
-                  <span className="sub-text p-2">Job ID</span>
+                  <span className="sub-text p-2">#</span>
                 </DataTableRow>
                 <DataTableRow size="mb">
-                  <span className="sub-text p-2">Company (ID)</span>
+                  <span className="sub-text p-2">Company </span>
                 </DataTableRow>
                 <DataTableRow size="md">
                   <span className="sub-text p-2">Job Type</span>
@@ -372,68 +332,68 @@ const JobManagment = () => {
               {/*Head*/}
               {currentItems.length > 0
                 ? currentItems.map((item, index) => {
-                    return (
-                      <DataTableItem key={item._id}>
-                        <DataTableRow className="nk-tb-col-check">
-                          <div className="custom-control custom-control-sm custom-checkbox notext">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              defaultChecked={item.checked}
-                              id={item._id}
-                              key={Math.random()}
-                              onChange={(e) => onSelectChange(e, item._id)}
-                            />
-                            <label className="custom-control-label" htmlFor={item._id}></label>
-                          </div>
-                        </DataTableRow>
-                        <DataTableRow>
-                          <Link to={`${process.env.PUBLIC_URL}/job-managment/details`}>
-                            <span className="text-decoration-underline">{index + 1}</span>
-                          </Link>
-                        </DataTableRow>
+                  return (
+                    <DataTableItem key={item._id}>
+                      <DataTableRow className="nk-tb-col-check">
+                        <div className="custom-control custom-control-sm custom-checkbox notext">
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            defaultChecked={item.checked}
+                            id={item._id}
+                            key={Math.random()}
+                            onChange={(e) => onSelectChange(e, item._id)}
+                          />
+                          <label className="custom-control-label" htmlFor={item._id}></label>
+                        </div>
+                      </DataTableRow>
+                      <DataTableRow>
+                        <Link to={`${process.env.PUBLIC_URL}/job-managment/details/` + item._id}>
+                          <span className="text-decoration-underline">{index + 1}</span>
+                        </Link>
+                      </DataTableRow>
 
-                        {/*
-                        User Should land on copmany page via route
+                      {/*
+                        Job Should land on copmany page via route
                         */}
-                        <DataTableRow size="mb">
-                          <Link to={`#`}>Kimmint</Link>
-                        </DataTableRow>
+                      <DataTableRow size="mb">
+                        <Link to={`#`}>{item.company?.name}</Link>
+                      </DataTableRow>
 
-                        <DataTableRow size="mb">
-                          <span>Freelancer</span>
-                        </DataTableRow>
-                        <DataTableRow size="md">
-                          {/* <span>{userTypeOptions.find((type) => type.value === item.type)?.label || item.role}</span> */}
-                          <span>$100</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <span>looking for chef</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <span>Restuarant</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <span>YYYY-MM-DD hh:mm</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <span>YYYY-MM-DD hh:mm</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <span>Global/Premium</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <span>$1000/year</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <div className="custom-control custom-switch">
-                            <input type="checkbox" className="custom-control-input" defaultChecked id="customSwitch2" />
-                            <label className="custom-control-label" htmlFor="customSwitch2"></label>
-                          </div>
-                        </DataTableRow>
-                      </DataTableItem>
-                    );
-                  })
+                      <DataTableRow size="mb">
+                        <span>{JobTypeOptions.find((type) => type.value === item.type)?.label}</span>
+                      </DataTableRow>
+                      <DataTableRow size="md">
+
+                        <span>{item.bonus}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <span>{item.title}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <span>{item.career?.title}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <span>{moment(item.startingDate).format("YYYY-MM-DD hh:mm")}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <span>{moment(item.endingDate).format("YYYY-MM-DD hh:mm")}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <span>{'Free'}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <span>{`${item.salary?.value}  ${item.salary?.currency?.title}`}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <div className="custom-control custom-switch">
+                          <input type="checkbox" className="custom-control-input" defaultChecked={item.ads} id="customSwitch2" />
+                          <label className="custom-control-label" htmlFor="customSwitch2"></label>
+                        </div>
+                      </DataTableRow>
+                    </DataTableItem>
+                  );
+                })
                 : null}
             </DataTableBody>
             <div className="card-inner">

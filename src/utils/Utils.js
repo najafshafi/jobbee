@@ -172,6 +172,10 @@ export const imageUrl = (image) => {
   return URL + '/uploads/original/' + image;
 }
 
+export const documentUrl = (document) => {
+  return URL + '/documents/' + document;
+}
+
 
 export const getTime = (date) => {
   let result = moment(date).fromNow();

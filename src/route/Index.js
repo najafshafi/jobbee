@@ -14,7 +14,7 @@ import UserManagment from "../pages/UserManagment";
 import MatchingPage from "../pages/MatchingPage";
 import MatchingManagment from "../pages/MatchingManagment";
 import JobManagment from "../pages/JobManagment";
-import JobManagmentDetails from "../pages/JobManagmentDetails";
+import JobDetails from "../pages/JobDetails";
 import BannerManagment from "../pages/BannerManagment";
 import OrderManagment from "../pages/OrderManagment";
 import DailyLifeManagment from "../pages/DailyLifeManagment";
@@ -121,6 +121,7 @@ import QuillPreview from "../pages/components/forms/rich-editor/QuillPreview";
 import TinymcePreview from "../pages/components/forms/rich-editor/TinymcePreview";
 import KnobPreview from "../pages/components/charts/KnobPreview";
 import { FileManagerContextProvider } from "../pages/app/file-manager/FileManagerContext";
+import JobsContextProvider from "../contexts/JobsContext";
 
 const Pages = () => {
   useLayoutEffect(() => {
@@ -157,18 +158,18 @@ const Pages = () => {
           exact
           path={`${process.env.PUBLIC_URL}/job-managment`}
           render={(props) => (
-            <UserContextProvider>
+            <JobsContextProvider>
               <JobManagment {...props} />
-            </UserContextProvider>
+            </JobsContextProvider>
           )}
         ></Route>
         <Route
           exact
-          path={`${process.env.PUBLIC_URL}/job-managment/details`}
+          path={`${process.env.PUBLIC_URL}/job-managment/details/:id`}
           render={(props) => (
-            <UserContextProvider>
-              <JobManagmentDetails {...props} />
-            </UserContextProvider>
+            <JobsContextProvider>
+              <JobDetails {...props} />
+            </JobsContextProvider>
           )}
         ></Route>
 

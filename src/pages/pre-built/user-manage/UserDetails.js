@@ -13,7 +13,6 @@ import { UserTypes } from "../../../store/constant";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import UserAccount from "./UserAccount";
 const UserDetails = ({ match }) => {
-
   const id = match.params.id;
 
   const { userLaoded, selectedUser, getUser, loading } = useContext(UserContext);
@@ -21,19 +20,15 @@ const UserDetails = ({ match }) => {
 
   const [userAccount, setUserAccount] = useState(false);
 
-
   const toggle = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log('selectedUser',selectedUser)
-
-
+  console.log("selectedUser", selectedUser);
 
   const userAccountToggle = () => {
     setUserAccount(!userAccount);
   };
-
 
   useEffect(() => {
     getUser(id);
@@ -44,28 +39,35 @@ const UserDetails = ({ match }) => {
   }
 
   const isUser = selectedUser.type === UserTypes.employee;
-
+  console.log(selectedUser.company);
   return (
     <React.Fragment>
       <Head title="User Details"></Head>
       <Content>
         <div className="d-flex justify-between align-center">
-          <h3>{isUser ? 'User' : 'Company'} Details</h3>
-          <Button color="primary">
+          <h3>{isUser ? "User" : "Company"} Details</h3>
+          <Button color="primary m-2">
             <span> List</span>
           </Button>
         </div>
         <div className="d-flex justify-between align-center">
           <div>
-            {isUser &&
-              <Button className="m-2"  onClick={() => {
-                userAccountToggle();
-              }} color="secondary"> User {userAccount ? `Details` : 'Account'}</Button>
-            }
+            {isUser && (
+              <Button
+                className="mb-2"
+                onClick={() => {
+                  userAccountToggle();
+                }}
+                color="secondary"
+              >
+                {" "}
+                User {userAccount ? `Details` : "Account"}
+              </Button>
+            )}
           </div>
           <div className="row">
             <div className="col-6 p-0">
-              <label htmlFor="customSwitch3">{isUser ? 'Seeking Job' : 'Hiring'}</label>
+              <label htmlFor="customSwitch3">{isUser ? "Seeking Job" : "Hiring"}</label>
               <hr className="my-1" />
             </div>
             <div className="col-2">
@@ -83,12 +85,8 @@ const UserDetails = ({ match }) => {
         </div>
         {userLaoded && isUser && (
           <>
-            {userAccount &&
-
-              <UserAccount selectedUser={selectedUser} />
-
-            }
-            {!userAccount &&
+            {userAccount && <UserAccount selectedUser={selectedUser} />}
+            {!userAccount && (
               <Block size="lg">
                 <PreviewCard>
                   <div>
@@ -197,11 +195,11 @@ const UserDetails = ({ match }) => {
                   </div>
                 </PreviewCard>
               </Block>
-            }
+            )}
           </>
         )}
 
-        {userLaoded && !isUser &&
+        {userLaoded && !isUser && (
           <Block size="lg">
             <PreviewCard>
               <div>
@@ -209,9 +207,9 @@ const UserDetails = ({ match }) => {
                   <tbody>
                     <tr>
                       <th scope="row">Member type</th>
-                      <td>General member</td>
+                      <td>{selectedUser.company.memberShip || "-"}</td>
                       <th>Name</th>
-                      <td>Kimmint</td>
+                      <td>{selectedUser.company.name}</td>
                     </tr>
                     <tr>
                       <th className="text-center align-middle">Image</th>
@@ -227,48 +225,37 @@ const UserDetails = ({ match }) => {
                         </div>
                       </td>
                       <th className="text-center align-middle">Business Number</th>
-                      <td className="align-middle">123-45-67899</td>
+                      <td className="align-middle">{selectedUser.company.phone}</td>
                     </tr>
                     <tr>
                       <th className="text-center align-middle">About Company</th>
                       <td colSpan={3} className="">
-                        I know I can help your company create stunning visuals. As someone who has worked in marketing
-                        and graphic design for over a decade, I know what brands need to capture their audiences'
-                        attention. With my powI know I can help your company create stunning visuals. As someone who
-                        has worked in marketing and graphic design for over a decade, I know what brands need to
-                        capture their audiences' attention. With my powI know I can help your company create stunning
-                        visuals. As someone who has worked in marketing and graphic design for over a decade, I know
-                        what brands need to capture their audiences' attention. With my powI know I can help your
-                        company create stunning visuals. As someone who has worked in marketing and graphic design for
-                        over a decade, I know what brands need to capture their audiences' attention. With my powI
-                        know I can help your company create stunning visuals. As someone who has worked in marketing
-                        and graphic design for over a decade, I know what brands need to capture their audiences'
-                        attention. With my pow
+                        {selectedUser.company.about}
                       </td>
                     </tr>
                     <tr>
                       <th scope="row">Post(feed) in Daily</th>
                       <td>13</td>
-                      <th>Scrapped porst</th>
+                      <th>Scrapped post</th>
                       <td>23</td>
                     </tr>
                     <tr>
                       <th scope="row">Follower</th>
-                      <td>11</td>
+                      <td>{selectedUser.company.followers || "-"}</td>
                       <th>Following</th>
-                      <td>15</td>
+                      <td>{selectedUser.company.followings || "-"}</td>
                     </tr>
                     <tr>
                       <th scope="row">Industry</th>
                       <td>Recruting</td>
                       <th>Company Size</th>
-                      <td>Over 256 Employees</td>
+                      <td>Over {selectedUser.company.companySize} Employees</td>
                     </tr>
                     <tr>
                       <th scope="row">Phone</th>
-                      <td>031-3939-3939</td>
+                      <td>{selectedUser.company.phone}</td>
                       <th>Email</th>
-                      <td>Naver@gmail.com</td>
+                      <td>{selectedUser.company.email}</td>
                     </tr>
                     <tr>
                       <th scope="row" className="text-center align-middle">
@@ -276,12 +263,12 @@ const UserDetails = ({ match }) => {
                       </th>
                       <td>
                         <div className="d-flex align-start">
-                          <p className="m-1">#11 256 Yeoksamdong seoul Busan . korea</p>
+                          <p className="m-1">{selectedUser.company.address}</p>
                           <span className="m-1 text-nowrap text-azure">Open Map</span>
                         </div>
                       </td>
                       <th className="text-center align-middle">Webisite</th>
-                      <td className=" align-middle">https://www.toso.com</td>
+                      <td className=" align-middle">{selectedUser.company.website}</td>
                     </tr>
                     <tr>
                       <th className="text-center align-middle">Photo</th>
@@ -387,12 +374,10 @@ const UserDetails = ({ match }) => {
                     </tr>
                   </tbody>
                 </table>
-
               </div>
             </PreviewCard>
           </Block>
-        }
-
+        )}
 
         <div className="mt-5 d-flex justify-content-between">
           <div>
@@ -415,7 +400,6 @@ const UserDetails = ({ match }) => {
             </Button>
           </div>
         </div>
-
       </Content>
     </React.Fragment>
   );

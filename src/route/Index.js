@@ -16,6 +16,7 @@ import MatchingManagment from "../pages/MatchingManagment";
 import JobManagment from "../pages/JobManagment";
 import JobDetails from "../pages/JobDetails";
 import BannerManagment from "../pages/BannerManagment";
+import BannerRegistration from "../pages/BannerRegistration";
 import OrderManagment from "../pages/OrderManagment";
 import DailyLifeManagment from "../pages/DailyLifeManagment";
 import AdsManagment from "../pages/AdsManagment";
@@ -23,7 +24,10 @@ import CouponManagment from "../pages/CouponManagment";
 import ChatManagment from "../pages/ChatManagment";
 import ReviewManagment from "../pages/ReviewManagment";
 import ServiceManagment from "../pages/ServiceManagment";
-import AdminSettings from "../pages/AdminSettings";
+import AdminAccountSettings from "../pages/AdminAccountSettings";
+import AdminAccountRegister from "../pages/AdminAccountRegister";
+import AdminHomePage from "../pages/AdminHomePage";
+import AdminHomePageRegister from "../pages/AdminHomePageRegister";
 
 import Component from "../pages/components/Index";
 import Accordian from "../pages/components/Accordions";
@@ -176,7 +180,7 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/matching-managment/details`} component={MatchingPage}></Route>
 
         {/* <Route exact path={`${process.env.PUBLIC_URL}/job-managment`} component={JobManagment}></Route> */}
-        <Route exact path={`${process.env.PUBLIC_URL}/banner-managment`} component={BannerManagment}></Route>
+
         <Route exact path={`${process.env.PUBLIC_URL}/order-managment`} component={OrderManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/daily-life-managment`} component={DailyLifeManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/ads-managment`} component={AdsManagment}></Route>
@@ -184,7 +188,6 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/chat-managment`} component={ChatManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/review-managment`} component={ReviewManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/service-managment`} component={ServiceManagment}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/admin-settings`} component={AdminSettings}></Route>
 
         <Route exact path={`${process.env.PUBLIC_URL}/_blank`} component={Blank}></Route>
 
@@ -198,6 +201,54 @@ const Pages = () => {
               <UserDetails {...props} />
             </UserContextProvider>
           )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/admin-homepage-management`}
+          render={(props) => (
+            <JobsContextProvider>
+              <AdminHomePage {...props} />
+            </JobsContextProvider>
+          )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/admin-homepage-management/register`}
+          component={AdminHomePageRegister}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/admin-account-settings`}
+          render={(props) => (
+            <JobsContextProvider>
+              <AdminAccountSettings {...props} />
+            </JobsContextProvider>
+          )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/admin-account-settings/register`}
+          component={AdminAccountRegister}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/banner-managment`}
+          render={(props) => (
+            <JobsContextProvider>
+              <BannerManagment {...props} />
+            </JobsContextProvider>
+          )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/banner-managment/banner-registration`}
+          component={BannerRegistration}
         ></Route>
 
         <Route

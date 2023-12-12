@@ -32,7 +32,6 @@ export const JobTypeOptions = [
   { value: "freelancer", label: "Freelancer" },
 ];
 
-
 const JobManagment = () => {
   const { loading, data, setJobList, fetchJobs } = useContext(JobsContext);
 
@@ -148,7 +147,6 @@ const JobManagment = () => {
                         }}
                       />
                     </div>
-
                   </div>
                 </div>
                 <div className="card-tools me-n1">
@@ -332,68 +330,72 @@ const JobManagment = () => {
               {/*Head*/}
               {currentItems.length > 0
                 ? currentItems.map((item, index) => {
-                  return (
-                    <DataTableItem key={item._id}>
-                      <DataTableRow className="nk-tb-col-check">
-                        <div className="custom-control custom-control-sm custom-checkbox notext">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            defaultChecked={item.checked}
-                            id={item._id}
-                            key={Math.random()}
-                            onChange={(e) => onSelectChange(e, item._id)}
-                          />
-                          <label className="custom-control-label" htmlFor={item._id}></label>
-                        </div>
-                      </DataTableRow>
-                      <DataTableRow>
-                        <Link to={`${process.env.PUBLIC_URL}/job-managment/details/` + item._id}>
-                          <span className="text-decoration-underline">{index + 1}</span>
-                        </Link>
-                      </DataTableRow>
+                    return (
+                      <DataTableItem key={item._id}>
+                        <DataTableRow className="nk-tb-col-check">
+                          <div className="custom-control custom-control-sm custom-checkbox notext">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input"
+                              defaultChecked={item.checked}
+                              id={item._id}
+                              key={Math.random()}
+                              onChange={(e) => onSelectChange(e, item._id)}
+                            />
+                            <label className="custom-control-label" htmlFor={item._id}></label>
+                          </div>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <Link to={`${process.env.PUBLIC_URL}/job-managment/details/` + item._id}>
+                            <span className="text-decoration-underline">{index + 1}</span>
+                          </Link>
+                        </DataTableRow>
 
-                      {/*
+                        {/*
                         Job Should land on copmany page via route
                         */}
-                      <DataTableRow size="mb">
-                        <Link to={`#`}>{item.company?.name}</Link>
-                      </DataTableRow>
+                        <DataTableRow size="mb">
+                          <Link to={`#`}>{item.company?.name}</Link>
+                        </DataTableRow>
 
-                      <DataTableRow size="mb">
-                        <span>{JobTypeOptions.find((type) => type.value === item.type)?.label}</span>
-                      </DataTableRow>
-                      <DataTableRow size="md">
-
-                        <span>{item.bonus}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{item.title}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{item.career?.title}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{moment(item.startingDate).format("YYYY-MM-DD hh:mm")}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{moment(item.endingDate).format("YYYY-MM-DD hh:mm")}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{'Free'}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <span>{`${item.salary?.value}  ${item.salary?.currency?.title}`}</span>
-                      </DataTableRow>
-                      <DataTableRow size="mb">
-                        <div className="custom-control custom-switch">
-                          <input type="checkbox" className="custom-control-input" defaultChecked={item.ads} id="customSwitch2" />
-                          <label className="custom-control-label" htmlFor="customSwitch2"></label>
-                        </div>
-                      </DataTableRow>
-                    </DataTableItem>
-                  );
-                })
+                        <DataTableRow size="mb">
+                          <span>{JobTypeOptions.find((type) => type.value === item.type)?.label}</span>
+                        </DataTableRow>
+                        <DataTableRow size="md">
+                          <span>{item.bonus}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{item.title}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{item.career?.title}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{moment(item.startingDate).format("YYYY-MM-DD hh:mm")}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{moment(item.endingDate).format("YYYY-MM-DD hh:mm")}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{"Free"}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <span>{`${item.salary?.value}  ${item.salary?.currency?.title}`}</span>
+                        </DataTableRow>
+                        <DataTableRow size="mb">
+                          <div className="custom-control custom-switch">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input"
+                              defaultChecked={item.ads}
+                              id="customSwitch2"
+                            />
+                            <label className="custom-control-label" htmlFor="customSwitch2"></label>
+                          </div>
+                        </DataTableRow>
+                      </DataTableItem>
+                    );
+                  })
                 : null}
             </DataTableBody>
             <div className="card-inner">

@@ -65,10 +65,21 @@ const menu = [
     text: "Service Managment",
     link: "/service-managment",
   },
+
   {
     icon: "setting-fill",
     text: "Admin Settings",
-    link: "/admin-settings",
+    // active: true,
+    subMenu: [
+      {
+        text: "Homepage management.",
+        link: "/admin-homepage-management",
+      },
+      {
+        text: "Account management",
+        link: "/admin-account-settings",
+      },
+    ],
   },
 ];
 export default menu;

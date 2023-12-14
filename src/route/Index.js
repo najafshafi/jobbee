@@ -22,7 +22,10 @@ import DailyLifeManagment from "../pages/DailyLifeManagment";
 import AdsManagment from "../pages/AdsManagment";
 import CouponManagment from "../pages/CouponManagment";
 import ChatManagment from "../pages/ChatManagment";
-import ReviewManagment from "../pages/ReviewManagment";
+import CompanyReviewManagment from "../pages/CompanyReviewManagment";
+import CompanyReviewDetails from "../pages/CompanyReviewDetails";
+import EmployeeReviewManagment from "../pages/EmployeeReviewManagment";
+import EmployeeReviewDetails from "../pages/EmployeeReviewDetails";
 import ServiceManagment from "../pages/ServiceManagment";
 import AdminAccountSettings from "../pages/AdminAccountSettings";
 import AdminAccountRegister from "../pages/AdminAccountRegister";
@@ -186,7 +189,7 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/ads-managment`} component={AdsManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/coupon-managment`} component={CouponManagment}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/chat-managment`} component={ChatManagment}></Route>
-        <Route exact path={`${process.env.PUBLIC_URL}/review-managment`} component={ReviewManagment}></Route>
+        {/* <Route exact path={`${process.env.PUBLIC_URL}/review-managment`} component={ReviewManagment}></Route> */}
         <Route exact path={`${process.env.PUBLIC_URL}/service-managment`} component={ServiceManagment}></Route>
 
         <Route exact path={`${process.env.PUBLIC_URL}/_blank`} component={Blank}></Route>
@@ -199,6 +202,45 @@ const Pages = () => {
           render={(props) => (
             <UserContextProvider>
               <UserDetails {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/review-managment/employee-review`}
+          render={(props) => (
+            <UserContextProvider>
+              <EmployeeReviewManagment {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/review-managment/employee-review/details`}
+          render={(props) => (
+            <UserContextProvider>
+              <EmployeeReviewDetails {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/review-managment/company-review`}
+          render={(props) => (
+            <UserContextProvider>
+              <CompanyReviewManagment {...props} />
+            </UserContextProvider>
+          )}
+        ></Route>
+
+        <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/review-managment/company-review/details`}
+          render={(props) => (
+            <UserContextProvider>
+              <CompanyReviewDetails {...props} />
             </UserContextProvider>
           )}
         ></Route>

@@ -58,7 +58,16 @@ const menu = [
   {
     icon: "thumbs-up",
     text: "Review Managment",
-    link: "/review-managment",
+    subMenu: [
+      {
+        text: "Company Reviews.",
+        link: "/review-managment/company-review",
+      },
+      {
+        text: "Employee Reviews",
+        link: "/review-managment/employee-review",
+      },
+    ],
   },
   {
     icon: "speed",

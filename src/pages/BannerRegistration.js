@@ -89,7 +89,7 @@ const BannerRegistration = () => {
                   </td>
                   <th scope="row">Start Date / End Date *</th>
                   <td colSpan={2}>
-                    <div className="d-flex">
+                    <div className="d-flex align-center">
                       <DatePicker
                         selected={startDate}
                         selectsStart

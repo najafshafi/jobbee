@@ -125,7 +125,7 @@ const MatchingManagment = () => {
 
   return (
     <React.Fragment>
-      <Head title="User Managment"></Head>
+      <Head title="Matching Managment"></Head>
       <Content>
         <BlockHead size="sm">
           <BlockBetween>

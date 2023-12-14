@@ -125,7 +125,7 @@ const UserManagment = () => {
 
   return (
     <React.Fragment>
-      <Head title="User List"></Head>
+      <Head title="User Managment"></Head>
       <Content>
         <BlockHead size="sm">
           <BlockBetween>

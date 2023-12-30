@@ -24,7 +24,7 @@ const UserDetails = ({ match }) => {
     setIsOpen(!isOpen);
   };
 
-  console.log("selectedUser", selectedUser);
+
 
   const userAccountToggle = () => {
     setUserAccount(!userAccount);
@@ -39,7 +39,6 @@ const UserDetails = ({ match }) => {
   }
 
   const isUser = selectedUser.type === UserTypes.employee;
-  console.log(selectedUser.company);
   return (
     <React.Fragment>
       <Head title="User Details"></Head>

@@ -40,3 +40,24 @@ export const job = (id) => {
 export const deleteJobs = (params) => {
     return axiosInstance.post('/jobs/delete', params);
 }
+
+
+
+
+export const onBoardings = (params) => {
+    const queryParams = '?' + new URLSearchParams(params).toString();
+    return axiosInstance.get('/boardings' + queryParams);
+}
+
+export const onBoarding = (id) => {
+    return axiosInstance.get('/boardings' + '/' + id);
+}
+
+
+export const onBoardingUpdate = (id, params) => {
+    return axiosInstance.put('/boardings' + '/' + id, params);
+}
+
+export const deleteOnBoardings = (params) => {
+    return axiosInstance.post('/boardings/delete', params);
+}

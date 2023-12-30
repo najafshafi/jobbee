@@ -129,6 +129,7 @@ import TinymcePreview from "../pages/components/forms/rich-editor/TinymcePreview
 import KnobPreview from "../pages/components/charts/KnobPreview";
 import { FileManagerContextProvider } from "../pages/app/file-manager/FileManagerContext";
 import JobsContextProvider from "../contexts/JobsContext";
+import OnBoardingsContextProvider from "../contexts/OnBoardingContext";
 
 const Pages = () => {
   useLayoutEffect(() => {
@@ -249,16 +250,29 @@ const Pages = () => {
           exact
           path={`${process.env.PUBLIC_URL}/admin-homepage-management`}
           render={(props) => (
-            <JobsContextProvider>
+            <OnBoardingsContextProvider>
               <AdminHomePage {...props} />
-            </JobsContextProvider>
+            </OnBoardingsContextProvider>
           )}
         ></Route>
 
         <Route
-          exact
           path={`${process.env.PUBLIC_URL}/admin-homepage-management/register`}
-          component={AdminHomePageRegister}
+          render={(props) => (
+            <OnBoardingsContextProvider>
+              <AdminHomePageRegister {...props} />
+            </OnBoardingsContextProvider>
+          )}
+        ></Route>
+
+
+        <Route
+          path={`${process.env.PUBLIC_URL}/admin-homepage-management/details/:id`}
+          render={(props) => (
+            <OnBoardingsContextProvider>
+              <AdminHomePageRegister {...props} />
+            </OnBoardingsContextProvider>
+          )}
         ></Route>
 
         <Route

@@ -1,16 +1,78 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Head from "../layout/head/Head";
 import Content from "../layout/content/Content";
 import { BlockHead, BlockTitle, Button, PreviewCard, Icon } from "../components/Component";
+import { OnBoardingsContext } from "../contexts/OnBoardingContext";
 
-const AdminHomePageRegister = () => {
+import {
+  Input,
+  Form
+} from "reactstrap";
+import { useForm } from "react-hook-form";
+
+
+const AdminHomePageRegister = ({ match }) => {
+  const id = match?.params?.id;
+  const { onBoardingLaoded, selectedonBoarding, setSelectedonBoarding, getOnBoarding, loading } = useContext(OnBoardingsContext);
+  const [imageFile, setImageFile] = useState(null);
+
+
+  useEffect(() => {
+    getOnBoarding(id);
+  }, [id]);
+
+  const { errors, register, handleSubmit } = useForm();
+
+
+  const onFormSubmit = async () => {
+    // setLoading(true)
+
+    // if (imageFile) {
+    //   const form = new FormData()
+    //   form.append('image', imageFile);
+    //   genre.image = (await uploadImage(form)).data;
+    // }
+
+
+    // if (modal.create) {
+
+    //   createGenres(genre).then((geners) => {
+    //     console.log('geners', geners);
+    //     setLoading(false);
+    //     setLoadPage(new Date().getMilliseconds())
+    //     setModal({ edit: false, create: false });
+    //   }).catch((error) => {
+    //     console.log('error', error);
+    //     setLoading(false);
+    //   })
+    //   return;
+    // }
+
+    // editGenres(genre).then(() => {
+    //   setLoading(false);
+    //   currentItems.find((item, index) => {
+    //     if (item._id === genre._id) {
+    //       currentItems[index] = genre;
+    //     }
+    //   });
+    //   setGeners({ ...geners, results: currentItems });
+    //   setModal({ edit: false, create: false });
+    // })
+  };
+
+
+  if (!onBoardingLaoded) {
+    return null;
+  }
+
   return (
     <React.Fragment>
       <Head title="App homepage management" />
+      <Form className="row gy-4" onSubmit={handleSubmit(onFormSubmit)}>
       <Content>
         <BlockHead size="sm">
           <div className="d-flex justify-content-between align-center">
-            <BlockTitle page>Register on the app website.</BlockTitle>
+            <BlockTitle page>Register on the app.</BlockTitle>
             <Button color="primary">List</Button>
           </div>
         </BlockHead>
@@ -25,49 +87,52 @@ const AdminHomePageRegister = () => {
                     {" "}
                     <div className="form-control-wrap">
                       <div className="input-group input-group-md">
-                        <input type="text" className="form-control" />
+                        <input required type="text" className="form-control" value={selectedonBoarding.title} />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Description*</th>
+                  <td colSpan={4}>
+                    {" "}
+                    <div className="form-control-wrap">
+                      <div className="input-group input-group-md">
+                        <textarea required onChange={(e) => {
+                          selectedonBoarding.description = e.target.value;
+                          setSelectedonBoarding({ ...selectedonBoarding });
+                        }} value={selectedonBoarding.description} className="form-control" name="Text1" cols="20" rows="2"></textarea>
+
                       </div>
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <th scope="row" className="centered-text vertically-centered ">
-                    Image registration (iOS) *
+                    Image
                   </th>
                   <td colSpan={4}>
                     <ul>
                       <div className="d-flex justify-content-between">
-                        <div className="d-flex gap-lg-2 align-center">
-                          <li className="my-1">Uploaded file name.jpg</li>
-                          <Icon className="mx-1" style={{ fontSize: "24px", cursor: "pointer" }} name="cross" />
-                        </div>
-
-                        <Button color="primary">Choose a file</Button>
+                        {selectedonBoarding.image &&
+                          <div className="d-flex gap-lg-2 align-center">
+                            <li className="my-1">Uploaded file {selectedonBoarding.image}</li>
+                            <Icon className="mx-1" style={{ fontSize: "24px", cursor: "pointer" }} name="cross" />
+                          </div>
+                        }
+                        <Input
+                          required
+                          type="file"
+                          name="image"
+                          id="customFile"
+                          onChange={(e) => {
+                            setImageFile(e.target.files[0])
+                          }}
+                        />
                       </div>
-                      <li>*Type: jpg, jpeg, png is possible.</li>
-                      <li>*Size: Width 343px Recommended (based on Device 375x812)</li>
-                      <li>*Capacity: Less than 00KB</li>
-                    </ul>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row" className="centered-text vertically-centered ">
-                    Image registration *
-                  </th>
-                  <td colSpan={4}>
-                    <ul>
-                      <div className="d-flex justify-content-between">
-                        <div className="d-flex gap-lg-2 align-center">
-                          <li className="my-1">Uploaded file name.jpg</li>
-                          <Icon className="mx-1" style={{ fontSize: "24px", cursor: "pointer" }} name="cross" />
-                        </div>
-
-                        <Button color="primary">Choose a file</Button>
-                      </div>
-
-                      <li>*Type: jpg, jpeg, png is possible.</li>
-                      <li>*Size: Width 328px Recommended (based on Device 360×740)</li>
-                      <li>*Capacity: Less than 00KB</li>
+                      {!selectedonBoarding.image &&
+                        <li>*Type: jpg, jpeg, png is possible.</li>
+                      }
                     </ul>
                   </td>
                 </tr>
@@ -80,7 +145,8 @@ const AdminHomePageRegister = () => {
           </div>
         </div>
       </Content>
-    </React.Fragment>
+      </Form>
+    </React.Fragment >
   );
 };
 

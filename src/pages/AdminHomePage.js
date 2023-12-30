@@ -1,13 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DropdownMenu, DropdownToggle, UncontrolledDropdown, DropdownItem, Spinner } from "reactstrap";
+import { Spinner } from "reactstrap";
 import {
   Block,
-  BlockBetween,
-  BlockDes,
   BlockHead,
-  BlockHeadContent,
   BlockTitle,
-  Icon,
   PaginationComponent,
   Button,
   DataTable,
@@ -15,32 +11,31 @@ import {
   DataTableHead,
   DataTableRow,
   DataTableItem,
-  RSelect,
 } from "../components/Component";
 
 import Content from "../layout/content/Content";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { deleteJobs } from "../services/apis";
-import { JobsContext } from "../contexts/JobsContext";
+import { deleteOnBoardings } from "../services/apis";
+import { OnBoardingsContext } from "../contexts/OnBoardingContext";
 import Head from "../layout/head/Head";
-import { getTime } from "../utils/Utils";
+import { imageUrl } from "../utils/Utils";
 
-export const JobTypeOptions = [
+export const onBoardingTypeOptions = [
   { value: "partime", label: "Partime" },
   { value: "fulltime", label: "Fulltime" },
   { value: "freelancer", label: "Freelancer" },
 ];
 
 const AdminSettings = () => {
-  const { loading, data, setJobList, fetchJobs } = useContext(JobsContext);
+  const { loading, data, setonBoardingList, fetchonBoardings } = useContext(OnBoardingsContext);
 
   const [tablesm, updateTableSm] = useState(false);
   const [onSearch, setonSearch] = useState(true);
   const [keyword, setkeyword] = useState("");
 
-  const [Jobstatus, setJobstatus] = useState(null);
-  const [JobType, setJobType] = useState(null);
+  const [onBoardingstatus, setonBoardingstatus] = useState(null);
+  const [onBoardingType, setonBoardingType] = useState(null);
   const [hiringStatus, setHiringStatus] = useState(null);
 
   const [page, setPage] = useState(1);
@@ -53,16 +48,16 @@ const AdminSettings = () => {
       params.keyword = keyword;
     }
 
-    if (Jobstatus) params.active = Jobstatus.value;
-    if (JobType) params.type = JobType.value;
+    if (onBoardingstatus) params.active = onBoardingstatus.value;
+    if (onBoardingType) params.type = onBoardingType.value;
     if (hiringStatus) params.hiringStatus = hiringStatus.value;
 
     return params;
   };
 
   useEffect(() => {
-    fetchJobs(params());
-  }, [page, limit, sortBy, keyword, Jobstatus, JobType, hiringStatus]);
+    fetchonBoardings(params());
+  }, [page, limit, sortBy, keyword, onBoardingstatus, onBoardingType, hiringStatus]);
 
   // onChange function for searching name
   const onFilterChange = (e) => {
@@ -80,7 +75,7 @@ const AdminSettings = () => {
       item.checked = e.currentTarget.checked;
       return item;
     });
-    setJobList({ ...data, results: [...newData] });
+    setonBoardingList({ ...data, results: [...newData] });
   };
 
   const onSelectChange = (e, id) => {
@@ -91,21 +86,21 @@ const AdminSettings = () => {
       }
       return item;
     });
-    setJobList({ ...data, results: [...newData] });
+    setonBoardingList({ ...data, results: [...newData] });
   };
 
   const [deleteLoading, setDeleteLoading] = useState(false);
   const onDelete = () => {
     setDeleteLoading(true);
-    let jobs = data.results.filter((item) => item.checked === true);
-    deleteJobs({
-      jobs: jobs.map((item) => {
+    let onBoardings = data.results.filter((item) => item.checked === true);
+    deleteOnBoardings({
+      onBoardings: onBoardings.map((item) => {
         return { _id: item._id };
       }),
     })
       .then((_) => {
         setDeleteLoading(false);
-        fetchJobs(params());
+        fetchonBoardings(params());
       })
       .catch((error) => {
         console.log(error);
@@ -142,53 +137,59 @@ const AdminSettings = () => {
                   </div>
                 </DataTableRow>
                 <DataTableRow size="mb">
-                  <span className="sub-text p-2">Number </span>
+                  <span className="sub-text p-2">#</span>
                 </DataTableRow>
                 <DataTableRow size="md">
                   <span className="sub-text p-2">Title</span>
                 </DataTableRow>
-                <DataTableRow size="lg">
-                  <span className="sub-text p-2">Author's email.</span>
+                <DataTableRow size="md">
+                  <span className="sub-text p-2">Description</span>
+                </DataTableRow>
+                <DataTableRow size="md">
+                  <span className="sub-text p-2">Image</span>
                 </DataTableRow>
                 <DataTableRow size="lg">
-                  <span className="sub-text p-2">Writing date</span>
+                  <span className="sub-text p-2">Created At</span>
                 </DataTableRow>
               </DataTableHead>
               {/*Head*/}
               {currentItems.length > 0
                 ? currentItems.map((item, index) => {
-                    return (
-                      <DataTableItem key={item._id}>
-                        <DataTableRow className="nk-tb-col-check">
-                          <div className="custom-control custom-control-sm custom-checkbox notext">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              defaultChecked={item.checked}
-                              id={item._id}
-                              key={Math.random()}
-                              onChange={(e) => onSelectChange(e, item._id)}
-                            />
-                            <label className="custom-control-label" htmlFor={item._id}></label>
-                          </div>
-                        </DataTableRow>
-                        <DataTableRow>
-                          <span>{index + 1}</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <Link className="text-decoration-underline" to={`#`}>
-                            App homepage image v.01
-                          </Link>
-                        </DataTableRow>
-                        <DataTableRow size="md">
-                          <span>{item.company?.email}</span>
-                        </DataTableRow>
-                        <DataTableRow size="mb">
-                          <span>{moment(item.startingDate).format("YYYY-MM-DD hh:mm")}</span>
-                        </DataTableRow>
-                      </DataTableItem>
-                    );
-                  })
+                  return (
+                    <DataTableItem key={item._id}>
+                      <DataTableRow className="nk-tb-col-check">
+                        <div className="custom-control custom-control-sm custom-checkbox notext">
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            defaultChecked={item.checked}
+                            id={item._id}
+                            key={Math.random()}
+                            onChange={(e) => onSelectChange(e, item._id)}
+                          />
+                          <label className="custom-control-label" htmlFor={item._id}></label>
+                        </div>
+                      </DataTableRow>
+                      <DataTableRow>
+                        <span>{index + 1}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <Link className="text-decoration-underline" to={`#`}>
+                          {item.title}
+                        </Link>
+                      </DataTableRow>
+                      <DataTableRow size="md">
+                        <span>{item.description}</span>
+                      </DataTableRow>
+                      <DataTableRow size="mb">
+                        <img src={imageUrl(item.image)} width="100px" />
+                      </DataTableRow>
+                      <DataTableRow size="md">
+                        <span>{moment(item.createdAt).format("YYYY-MM-DD hh:mm")}</span>
+                      </DataTableRow>
+                    </DataTableItem>
+                  );
+                })
                 : null}
             </DataTableBody>
             <div className="card-inner">

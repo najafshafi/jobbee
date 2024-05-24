@@ -1,5 +1,7 @@
 import React, { Suspense, useLayoutEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
 import { ProductContextProvider } from "../pages/pre-built/products/ProductContext";
 import { UserContextProvider } from "../contexts/UserContext";
 import { RedirectAs404 } from "../utils/Utils";
@@ -31,6 +33,8 @@ import AdminAccountSettings from "../pages/AdminAccountSettings";
 import AdminAccountRegister from "../pages/AdminAccountRegister";
 import AdminHomePage from "../pages/AdminHomePage";
 import AdminHomePageRegister from "../pages/AdminHomePageRegister";
+import { DynamicOptionsProvider } from "../contexts/DynamicOptionsContext";
+import DynamicOptions from "../pages/DynamicOptions"
 
 import Component from "../pages/components/Index";
 import Accordian from "../pages/components/Accordions";
@@ -130,6 +134,7 @@ import KnobPreview from "../pages/components/charts/KnobPreview";
 import { FileManagerContextProvider } from "../pages/app/file-manager/FileManagerContext";
 import JobsContextProvider from "../contexts/JobsContext";
 import OnBoardingsContextProvider from "../contexts/OnBoardingContext";
+
 
 const Pages = () => {
   useLayoutEffect(() => {
@@ -316,6 +321,33 @@ const Pages = () => {
             </UserContextProvider>
           )}
         ></Route>
+
+
+        {/* <Route
+          exact
+          path={`${process.env.PUBLIC_URL}/form-options/:option`}
+          render={(props) => (
+            <UserContextProvider>
+              <OptionsDynamic {...props} />
+            </UserContextProvider>
+          )}
+        ></Route> */}
+
+        <Router>
+          <Switch>
+            <DynamicOptionsProvider>
+              <Route path="/form-options/:optionType" component={DynamicOptions} />
+            </DynamicOptionsProvider>
+          </Switch>
+        </Router>
+
+
+        {/* <Router>
+          <Switch>
+            <Route path="form-options/:option" component={OptionsDynamic} />
+            <Redirect from="/" to="/gender" />
+          </Switch>
+        </Router> */}
 
         {/* <Route exact path={`${process.env.PUBLIC_URL}/project-card`} component={ProjectCardPage}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/project-list`} component={ProjectListPage}></Route>

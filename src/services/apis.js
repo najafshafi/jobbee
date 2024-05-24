@@ -61,3 +61,10 @@ export const onBoardingUpdate = (id, params) => {
 export const deleteOnBoardings = (params) => {
     return axiosInstance.post('/boardings/delete', params);
 }
+
+
+
+
+export const Options = (params) => {
+    return axiosInstance.get('/options' + "/" + params);
+}   

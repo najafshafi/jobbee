@@ -322,25 +322,7 @@ const Pages = () => {
           )}
         ></Route>
 
-
-        {/* <Route
-          exact
-          path={`${process.env.PUBLIC_URL}/form-options/:option`}
-          render={(props) => (
-            <UserContextProvider>
-              <OptionsDynamic {...props} />
-            </UserContextProvider>
-          )}
-        ></Route> */}
-
-        <Router>
-          <Switch>
-            <DynamicOptionsProvider>
-              <Route path="/form-options/:optionType" component={DynamicOptions} />
-            </DynamicOptionsProvider>
-          </Switch>
-        </Router>
-
+        <Route path="/form-options/:optionType" component={DynamicOptions} />
 
         {/* <Router>
           <Switch>

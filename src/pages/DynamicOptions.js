@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
     Block,
@@ -20,33 +20,55 @@ import {
 import { DropdownMenu, DropdownToggle, UncontrolledDropdown, DropdownItem, Spinner } from "reactstrap";
 import Content from "../layout/content/Content";
 import Head from "../layout/head/Head";
-import { DynamicOptionsContext } from "../contexts/DynamicOptionsContext";
 import { JobTypeOptions } from "./JobManagment";
 import moment from "moment";
+import { options } from "../services/apis";
 
 const DynamicOptions = () => {
-    const { loading, data, fetchOptions } = useContext(DynamicOptionsContext);
-    const { optionType, totalResults } = useParams();
+
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState({ results: [], totalResults: 0 });
+
+    const { optionType } = useParams();
 
     const [tablesm, updateTableSm] = useState(false);
     const [onSearch, setonSearch] = useState(true);
     const [keyword, setKeyword] = useState("");
-    // const [totalResults, settotalResults] = useState();
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
+    const [loadPage, setLoadPage] = useState(0);
 
-    const params = () => ({
-        optionType,
-        keyword,
-        // jobType: JobType?.value,
-        totalResults,
-        page,
-        limit,
-    });
 
     useEffect(() => {
-        fetchOptions(params());
-    }, [optionType, page, limit, keyword, totalResults]);
+
+        setPage(1);
+        setLoadPage(loadPage + 1);
+        setData({ results: [], totalResults: 0 });
+
+
+    }, [optionType]);
+
+
+    const params = () => {
+        const params = {
+            page: page,
+            limit: limit
+        };
+        if (keyword) {
+            params.keyword = keyword;
+        }
+        return params;
+    }
+    useEffect(() => {
+        setLoading(true);
+        options(optionType, params()).then((res) => {
+            setData(res.data);
+            setLoading(false);
+        }).catch((err) => {
+            setLoading(false);
+            console.log(err);
+        });
+    }, [optionType, page, limit, keyword, loadPage]);
 
 
 
@@ -57,7 +79,6 @@ const DynamicOptions = () => {
     const toggle = () => setonSearch(!onSearch);
     const paginate = (page) => setPage(page);
 
-    console.log(totalResults)
 
     return (
         <React.Fragment>
@@ -68,7 +89,7 @@ const DynamicOptions = () => {
                         <BlockHeadContent>
                             <BlockTitle page>{optionType}</BlockTitle>
                             <BlockDes className="text-soft">
-                                You have total {totalResults} cases
+                                You have total {data.totalResults} cases
                             </BlockDes>
                         </BlockHeadContent>
                     </BlockBetween>

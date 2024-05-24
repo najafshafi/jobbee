@@ -63,8 +63,7 @@ export const deleteOnBoardings = (params) => {
 }
 
 
-
-
-export const Options = (params) => {
-    return axiosInstance.get('/options' + "/" + params);
-}   
+export const options = async (option, params) => {
+    const queryParams = '?' + new URLSearchParams(params).toString();
+    return axiosInstance.get(`/options/${option}` + queryParams);
+};

@@ -102,28 +102,8 @@ const menu = [
       },
 
       {
-        text: "Gender",
-        link: "/form-options/gender",
-      },
-
-      {
-        text: "Nationality",
-        link: "/form-options/nationality",
-      },
-
-      {
         text: "Language",
         link: "/form-options/language",
-      },
-
-      {
-        text: "Job Type",
-        link: "/form-options/job-type",
-      },
-
-      {
-        text: "Language Ability",
-        link: "/form-options/language-ability",
       },
 
       {
@@ -132,44 +112,55 @@ const menu = [
       },
 
       {
-        text: "Career Ability",
-        link: "/form-options/career-ability",
+        text: "skill",
+        link: "/form-options/skill",
       },
+
+      {
+        text: "Career",
+        link: "/form-options/career",
+      },
+
+      {
+        text: "Currency",
+        link: "/form-options/currency",
+      },
+
       {
         text: "Period",
         link: "/form-options/period",
       },
+
       {
-        text: "Payment Ability",
-        link: "/form-options/payment-ability",
+        text: "Salary Duration",
+        link: "/form-options/salaryDuration",
       },
       {
-        text: "Currency Ability",
-        link: "/form-options/currency-ability",
+        text: "Wishes",
+        link: "/form-options/wishes",
+      },
+      {
+        text: "Business Types",
+        link: "/form-options/businessTypes",
+      },
+      {
+        text: "Company Size",
+        link: "/form-options/companySize",
       },
 
       {
-        text: "Experience Ability",
-        link: "/form-options/experience-ability",
+        text: "Compliment",
+        link: "/form-options/compliment",
       },
 
       {
-        text: "Employee Charactorer",
-        link: "/form-options/employee-charactorer",
+        text: "Countries",
+        link: "/form-options/countries",
       },
       {
-        text: "People (hiring)",
-        link: "/form-options/people",
+        text: "Post Types",
+        link: "/form-options/postTypes",
       },
-      {
-        text: "Company size (hiring)",
-        link: "/form-options/company-size",
-      },
-      {
-        text: "Form Option",
-        link: "/form-options/form-option",
-      },
-
 
     ],
   },

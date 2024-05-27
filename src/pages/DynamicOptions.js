@@ -89,7 +89,7 @@ const DynamicOptions = () => {
                         <BlockHeadContent>
                             <BlockTitle page>{optionType}</BlockTitle>
                             <BlockDes className="text-soft">
-                                You have total {data.totalResults} cases
+                                You have total {data.totalResults} cases.
                             </BlockDes>
                         </BlockHeadContent>
                     </BlockBetween>
@@ -313,7 +313,7 @@ const DynamicOptions = () => {
                                             </Link>
                                         </DataTableRow>
                                         <DataTableRow size="mb">
-                                            <Link to={`#`}>{item.company?.name}</Link>
+                                            {/* <Link to={`#`}>{item.company?.name}</Link> */}
                                         </DataTableRow>
                                         <DataTableRow size="mb">
                                             <span>{JobTypeOptions.find((type) => type.value === item.type)?.label}</span>
